@@ -3,7 +3,7 @@
 # Integrantes do Grupo
 | ----- Nome ------ |
 | Anne Vieira       |
-| Cecília Rufattu   |
+| Cecília Rufatto   |
 | Gabriela Tomie    |
 | Sophia Dalla      |
 | Sophia Fabri      |
