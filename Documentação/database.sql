@@ -9,7 +9,7 @@ CREATE TABLE candidatos (
 );
 -- Tabela de Eleitores
 CREATE TABLE eleitores (
-    id_usuario INT AUTO_INCREMENT PRIMARY KEY,
+    id_eleitor INT AUTO_INCREMENT PRIMARY KEY,
     titulo_eleitor VARCHAR(12) UNIQUE NOT NULL,
     cpf VARCHAR(11) UNIQUE NOT NULL,
     -- UNIQUE impede CPFs repetidos
@@ -17,7 +17,7 @@ CREATE TABLE eleitores (
     login VARCHAR(50) UNIQUE NOT NULL,
     -- UNIQUE impede logins repetidos
     senha VARCHAR(255) NOT NULL,
-    -- Indica se o usuário já votou, para controle do voto único
+    -- Indica se o eleitor já votou, para controle do voto único
     ja_votou BOOLEAN DEFAULT FALSE,
     -- Indica se o eleitor tbm é um mesário
     mesario BOOLEAN DEFAULT FALSE

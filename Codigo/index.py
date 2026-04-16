@@ -3,8 +3,8 @@
 # Arquivo principal do sistema
 # =============================================================================
 
-import Codigo.consultas as consultas  # Modulo de conexao e queries do banco de dados
-import Codigo.util as util       # Modulo de funcoes utilitarias (validacao, logs, etc.)
+import consultas as consultas  # Modulo de conexao e queries do banco de dados
+import util as util       # Modulo de funcoes utilitarias (validacao, logs, etc.)
 
 # =============================================================================
 # FUNCOES AUXILIARES
@@ -103,6 +103,10 @@ while opcao != 3:
                 cpf = input("Digite o CPF (apenas numeros): ").strip()
                 cpf = ''.join(filter(str.isdigit, cpf))  # Remove caracteres nao numericos
                 
+                # RF001.01 - Solicitar Título de Eleitor
+                titulo = input("Digite o Título de Eleitor (apenas numeros): ").strip()
+                titulo = ''.join(filter(str.isdigit, titulo))  # Remove caracteres nao numericos
+
                 # RF001.02 - Validar CPF matematicamente
                 if not util.validar_cpf(cpf):
                     print("\nErro: CPF invalido! Verifique os digitos.\n")
@@ -114,7 +118,19 @@ while opcao != 3:
                     print("\nErro: CPF ja cadastrado no sistema!\n")
                     util.salvar_log("ERRO - Tentativa de cadastro com CPF duplicado")
                     continue
+
+                # RF001.02 - Validar titulo matematicamente
+                if not util.validar_titulo(titulo):
+                    print("\nErro: Titulo inválido! Verifique os digitos.\n")
+                    util.salvar_log("ERRO - Titulo de eleitor invalido informado")
+                    continue
                 
+                # RF001.03 - Verificar duplicidade de Titulo
+                if verificar_cpf_existe(cpf):
+                    print("\nErro: Titulo de eleitor ja cadastrado no sistema!\n")
+                    util.salvar_log("ERRO - Tentativa de cadastro com titulo de eleitor duplicado")
+                    continue
+
                 # RF001.01 - Perguntar se e mesario
                 is_mesario_input = input("O eleitor e mesario? (S/N): ").strip().upper()
                 is_mesario = is_mesario_input == 'S'
@@ -124,14 +140,13 @@ while opcao != 3:
                 
                 # Inserir no banco de dados
                 try:
-                    if is_mesario:
-                        # Cadastra na tabela de mesarios
-                        consultas.inserir_mesarios(cpf, nome, chave_acesso)
-                        util.salvar_log("SUCESSO - Mesario cadastrado: " + nome)
-                    else:
-                        # Cadastra na tabela de usuarios (eleitores)
-                        consultas.inserir_usuarios(cpf, nome, chave_acesso, None, False)
-                        util.salvar_log("SUCESSO - Eleitor cadastrado: " + nome)
+                    mesario = False
+                    if is_mesario == "S" :
+                        mesario = True
+
+                    # Cadastra na tabela de eleitores
+                    consultas.inserir_eleitores(titulo, cpf, nome, chave_acesso, None, mesario)
+                    util.salvar_log("SUCESSO - Eleitor cadastrado: " + nome)
                     
                     # Exibir confirmacao e chave de acesso
                     print("\n" + "="*40)
@@ -139,6 +154,7 @@ while opcao != 3:
                     print("="*40)
                     print("Nome: " + nome)
                     print("CPF: " + cpf)
+                    print("Título de Eleitor: " + titulo)
                     print("Tipo: " + ("Mesario" if is_mesario else "Eleitor"))
                     print("\nCHAVE DE ACESSO: " + chave_acesso)
                     print("\nATENCAO: Guarde esta chave!")
@@ -168,30 +184,18 @@ while opcao != 3:
                 
                 # Variaveis para armazenar resultado da busca
                 eleitor_encontrado = None
-                tipo_eleitor = None
-                
+                eleitor_mesario = "Não"
                 try:
                     # Buscar na tabela de usuarios
                     consultas.cursor.execute(
-                        "SELECT cpf, nome_completo, senha FROM usuarios WHERE cpf = %s", 
+                        "SELECT cpf, nome_completo, titulo_eleitor, mesario senha FROM eleitores WHERE cpf = %s", 
                         (cpf_busca,)
                     )
-                    resultado = consultas.cursor.fetchone()
-                    
-                    if resultado:
-                        eleitor_encontrado = resultado
-                        tipo_eleitor = "usuario"
-                    else:
-                        # Se nao encontrou em usuarios, buscar em mesarios
-                        consultas.cursor.execute(
-                            "SELECT cpf, nome_completo, senha FROM mesarios WHERE cpf = %s", 
-                            (cpf_busca,)
-                        )
-                        resultado = consultas.cursor.fetchone()
-                        if resultado:
-                            eleitor_encontrado = resultado
-                            tipo_eleitor = "mesario"
-                            
+                    eleitor_encontrado = consultas.cursor.fetchone()
+                    if eleitor_encontrado[3]:
+                        eleitor_mesario = "Sim"
+                    else :
+                        eleitor_mesario = "Não"
                 except Exception as e:
                     print("\nErro ao buscar: " + str(e) + "\n")
                     continue
@@ -208,7 +212,8 @@ while opcao != 3:
                 print("="*40)
                 print("CPF: " + eleitor_encontrado[0])
                 print("Nome: " + eleitor_encontrado[1])
-                print("Tipo: " + ("Mesario" if tipo_eleitor == "mesario" else "Eleitor"))
+                print("Título de Eleitor: " + eleitor_encontrado[2])
+                print("Mesário: " + eleitor_mesario)
                 print("="*40)
                 
                 # Menu de opcoes de edicao
@@ -223,7 +228,7 @@ while opcao != 3:
                     continue
                 
                 if opcao_edicao == 0:
-                    print("\nEdicao cancelada.\n")
+                    print("\nEdição cancelada.\n")
                     continue
                 elif opcao_edicao == 1:
                     # Editar nome
@@ -234,16 +239,10 @@ while opcao != 3:
                     
                     # Executar UPDATE no banco de dados
                     try:
-                        if tipo_eleitor == "usuario":
-                            consultas.cursor.execute(
-                                "UPDATE usuarios SET nome_completo = %s, login = %s WHERE cpf = %s",
-                                (novo_nome, novo_nome + cpf_busca, cpf_busca)
-                            )
-                        else:
-                            consultas.cursor.execute(
-                                "UPDATE mesarios SET nome_completo = %s, login = %s WHERE cpf = %s",
-                                (novo_nome, novo_nome + cpf_busca, cpf_busca)
-                            )
+                        consultas.cursor.execute(
+                            "UPDATE eleitores SET nome_completo = %s, login = %s WHERE cpf = %s",
+                            (novo_nome, novo_nome + cpf_busca, cpf_busca)
+                        )
                         
                         # Confirmar transacao
                         consultas.conexao.commit()
@@ -282,7 +281,15 @@ while opcao != 3:
             # LISTAR ELEITORES (RF001.08) - A implementar
             # ---------------------------------------------------------
             elif opcaoGerenciamento == 5:
-                print("Entrou em Gerenciamento -> Listar Eleitores\n")
+                eleitores = consultas.busca_eleitores()
+                print("ELEITORES: \n")
+                for i in eleitores:
+                    print("Id: ", i[0])
+                    print("Título de Eleitor: ", i[1])
+                    print("CPF: ", i[2])
+                    print("Nome: ", i[3])
+                    print("Já votou: ", i[4])
+                    print("Mesário: ", i[5])
                 util.salvar_log("GERENCIAMENTO - Listar Eleitores")
             
             # ---------------------------------------------------------

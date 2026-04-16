@@ -9,3 +9,8 @@ Opção de gerenciamento selecionado
 GERENCIMANETO - Voltar ao menu principal
 Opção de votação selecionado
 VOTAÇÃO - Resultados
+[2026-04-16 11:49:04] Opcao de gerenciamento selecionado
+[2026-04-16 11:49:06] GERENCIAMENTO - Cadastrar Eleitor
+[2026-04-16 11:49:49] ERRO - Titulo de eleitor invalido informado
+[2026-04-16 11:50:04] GERENCIAMENTO - Cadastrar Eleitor
+[2026-04-16 11:50:19] ERRO - Falha ao cadastrar eleitor: 1054 (42S22): Unknown column 'titulo_eleitor' in 'field list'
