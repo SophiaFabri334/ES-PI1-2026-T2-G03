@@ -468,3 +468,87 @@ voto_protegido = criptografar(voto_do_usuario)
 
 # Agora você salva 'voto_protegido' no banco de dados
 print(f"Salvando no banco: {voto_protegido}")
+
+cpf = input("digite o cpf: ")
+
+#tirar tudo o que não for número 
+cpf_limpo = " "
+for c in cpf: 
+    if c >= "0" and c <= "9":
+        cpf_limpo = cpf_limpo + c 
+
+#contar os digitos 
+contador = 0 
+
+for c in cpf_limpo:
+    contador += 1 
+
+#verificar tamanho, cpf tem 11 digitos
+if contador != 11: 
+    print("cpf inválido")
+else: 
+    soma = 0 
+    for i in range(9):
+        soma += int(cpf_limpo[i]) * (10 - i)
+
+    digito1 = (soma * 10) % 11 
+    if digito1 == 10: 
+        digito1 = 0 
+
+    #calcular 2 digito
+    soma = 0 
+    for i in range(10):
+        soma += int(cpf_limpo[i]) * (11 - i)
+
+    digito2 = (soma * 10) % 11
+    if digito2 == 10: 
+        digito2 = 0 
+
+    #comparando os digitos para validar
+    if digito1 == int(cpf_limpo[9]) and digito2 == int(cpf_limpo[10]): 
+        print("cpf válido")
+    else: 
+        print("cpf inválido")
+
+    titulo = input("digite o titulo de eleitor: ")
+
+    #so numeros
+    titulo_limpo = " "
+    for c in titulo:
+        if c >= "0" and c <= "9":
+            titulo_limpo = titulo_limpo + c 
+
+    #tamanho, deve ter 12 numeros 
+    contador = 0 
+    for c in titulo_limpo:
+        contador += 1 
+
+    if contador != 12:
+        print("titulo invalido")
+    else: 
+        soma = 0 
+        for i in range(8): 
+            soma += int(titulo_limpo[i]) * (2 + i)
+    
+    digito1 = soma % 11
+    if digito1 > 9: 
+        digito1 = 0 
+
+    #calcular 2  digito 
+    soma = 0 
+    for i in range(8,10):
+        soma += int(titulo_limpo[i]) * (7 - i)
+        
+    soma += digito1 * 2
+
+    digito2 = soma % 11 
+    if digito2 > 9:
+        digito2 = 0 
+
+    #comparando digitos para validar 
+    if digito1 == int(titulo_limpo[10]) and digito2 == int(titulo_limpo[11]):
+        print("titulo valido")
+    else: 
+        print("titulo invalido") 
+
+    
