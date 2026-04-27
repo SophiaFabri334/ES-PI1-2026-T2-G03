@@ -44,6 +44,21 @@ def busca_eleitores():
     cursor.close()
     return resultado
 
+# busca de eleitores por pesquisa
+def filtra_eleitores(pesquisa):
+    cursor = conexao.cursor()
+    
+    sql = "SELECT E.id_eleitor, E.titulo_eleitor, E.cpf, E.nome_completo, E.ja_votou, E.mesario FROM ELEITORES E WHERE E.titulo_eleitor LIKE %s OR E.nome_completo LIKE %s OR E.cpf LIKE %s ORDER BY E.id_eleitor"
+    
+    valor = f"%{pesquisa}%"
+    valores = (valor, valor, valor)
+
+    cursor.execute(sql, valores)
+    resultado = cursor.fetchall()
+    cursor.close()
+    
+    return resultado
+
 #remover eleitor
 def remover_eleitor(cpf):
     cursor = conexao.cursor()

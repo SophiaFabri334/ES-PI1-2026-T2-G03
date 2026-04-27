@@ -285,7 +285,7 @@ while opcao != 3:
                 eleitor_encontrado = None
                 
                 try:
-                    # Buscar na tabela de usuarios
+                    # Buscar na tabela de eelitores
                     consultas.cursor.execute(
                         "SELECT cpf, nome_completo, mesario FROM eleitores WHERE cpf = %s", 
                         (cpf_busca,)
@@ -344,6 +344,28 @@ while opcao != 3:
             # ---------------------------------------------------------
             elif opcaoGerenciamento == 4:
                 print("Entrou em Gerenciamento -> Buscar Eleitor\n")
+                print("\n" + "="*40)
+                print("BUSCAR ELEITORES:")
+                pesquisa = input("Pesquisa: ").strip()
+                try:
+                    resultado = consultas.filtra_eleitores(pesquisa)
+                    if not resultado:
+                        print("Nenhum eleitor encontrado.")
+                    else:
+                        for res in resultado:
+                            print("\n" + "="*40)
+                            print(f"ID: {res[0]}")
+                            print(f"Titulo de Eleitor: {res[1]}")
+                            print(f"CPF: {res[2]}")
+                            print(f"Nome: {res[3]}")
+                            print(f"Ja votou: {"Não" if res[4] == None else "Sim"}")
+                            print(f"Mesario: {"Sim" if res[5] == 1 else "Não"}")
+                            print("="*40 + "\n")
+
+                except Exception as e:
+                    print("\nErro ao buscar eleitores: " + str(e) + "\n")
+                    util.salvar_log("ERRO - Falha ao buscar eleitores: " + str(e))
+
                 util.salvar_log("GERENCIAMENTO - Buscar Eleitor")
             
             # ---------------------------------------------------------

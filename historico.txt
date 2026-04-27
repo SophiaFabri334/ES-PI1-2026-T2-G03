@@ -168,3 +168,6 @@ VOTAÇÃO - Resultados
 [2026-04-27 12:10:33] GERENCIAMENTO - Listar Eleitores
 [2026-04-27 12:10:45] Opcao de gerenciamento selecionado
 [2026-04-27 12:10:47] GERENCIAMENTO - Listar Eleitores
+[2026-04-27 18:18:12] Opcao de gerenciamento selecionado
+[2026-04-27 18:18:19] GERENCIAMENTO - Buscar Eleitor
+[2026-04-27 18:18:33] GERENCIAMENTO - Buscar Eleitor
