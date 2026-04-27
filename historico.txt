@@ -108,3 +108,13 @@ VOTAÇÃO - Resultados
 [2026-04-27 11:25:23] GERENCIAMENTO - Remover Eleitor
 [2026-04-27 11:25:29] SUCESSO - Eleitor removido: 56620106846 (Soso)
 [2026-04-27 11:25:34] GERENCIAMENTO - Listar Eleitores
+[2026-04-27 11:45:08] Gerenciamento -> Opcao invalida
+[2026-04-27 11:45:09] Gerenciamento -> Opcao invalida
+[2026-04-27 11:45:11] Gerenciamento -> Opcao invalida
+[2026-04-27 11:45:11] Gerenciamento -> Opcao invalida
+[2026-04-27 11:45:13] GERENCIAMENTO - Cadastrar Eleitor
+[2026-04-27 11:45:53] SUCESSO - Eleitor cadastrado: Sophia Fabri
+[2026-04-27 11:46:01] GERENCIAMENTO - Cadastrar Eleitor
+[2026-04-27 11:48:43] SUCESSO - Eleitor cadastrado: Sophia Lopes
+[2026-04-27 11:48:47] GERENCIAMENTO - Listar Eleitores
+[2026-04-27 11:48:59] GERENCIAMENTO - Voltar ao menu principal

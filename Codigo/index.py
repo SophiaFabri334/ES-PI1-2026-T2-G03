@@ -120,10 +120,10 @@ while opcao != 3:
                     continue
 
                 # RF001.02 - Validar titulo matematicamente
-                # if not util.validar_titulo(titulo):
-                #     print("\nErro: Titulo inválido! Verifique os digitos.\n")
-                #     util.salvar_log("ERRO - Titulo de eleitor invalido informado")
-                #     continue
+                if not util.validar_titulo(titulo):
+                    print("\nErro: Titulo inválido! Verifique os digitos.\n")
+                    util.salvar_log("ERRO - Titulo de eleitor invalido informado")
+                    continue
                 
                 # RF001.03 - Verificar duplicidade de Titulo
                 if verificar_cpf_existe(cpf):

@@ -47,45 +47,30 @@ def validar_cpf(cpf):
     return True
 
 def validar_titulo(titulo):
-    # Remove espaços
-    # titulo = titulo.strip()
+    # precisa ter 12 dígitos
+    if len(titulo) != 12:
+        return False
 
-    # # Deve ter 12 dígitos numéricos
-    # if not titulo.isdigit() or len(titulo) != 12:
-    #     return False
+    # separa partes
+    numero = titulo[:8]
+    uf = titulo[8:10]
+    dv = titulo[10:]
 
-    # numeros = [int(d) for d in titulo]
+    # calcula primeiro dígito verificador
+    soma = sum(int(numero[i]) * (9 - i) for i in range(8))
+    d1 = soma % 11
+    if d1 == 10:
+        d1 = 0
 
-    # # ---- Primeiro dígito verificador ----
-    # soma = 0
-    # peso = 2
+    # calcula segundo dígito
+    soma = sum(int(uf[i]) * (3 - i) for i in range(2)) + d1 * 2
+    d2 = soma % 11
+    if d2 == 10:
+        d2 = 0
 
-    # for i in range(7, -1, -1):  # posições 8 a 1
-    #     soma += numeros[i] * peso
-    #     peso += 1
-
-    # resto = soma % 11
-    # dv1 = 0 if resto < 2 else 11 - resto
-
-    # if numeros[10] != dv1:
-    #     return False
-
-    # # ---- Segundo dígito verificador ----
-    # soma = 0
-    # peso = 7
-
-    # for i in range(10, 7, -1):  # posições 11 a 9
-    #     soma += numeros[i] * peso
-    #     peso -= 1
-
-    # resto = soma % 11
-    # dv2 = 0 if resto < 2 else 11 - resto
-
-    # if numeros[11] != dv2:
-    #     return False
-
-    return True
-
+    # compara com os dígitos informados
+    return dv == f"{d1}{d2}"
+   
 def gerar_chave_acesso():
     """Gera uma chave de acesso única de 8 caracteres alfanuméricos."""
     caracteres = string.ascii_uppercase + string.digits
