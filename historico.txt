@@ -171,3 +171,11 @@ VOTAÇÃO - Resultados
 [2026-04-27 18:18:12] Opcao de gerenciamento selecionado
 [2026-04-27 18:18:19] GERENCIAMENTO - Buscar Eleitor
 [2026-04-27 18:18:33] GERENCIAMENTO - Buscar Eleitor
+[2026-04-28 10:01:19] Opcao de gerenciamento selecionado
+[2026-04-28 10:01:58] GERENCIAMENTO - Cadastrar Eleitor
+[2026-04-28 10:02:45] SUCESSO - Eleitor cadastrado: Anne
+[2026-04-28 10:02:53] GERENCIAMENTO - Editar Eleitor
+[2026-04-28 10:03:06] SUCESSO - Eleitor editado: 56620106846
+[2026-04-28 10:03:36] GERENCIAMENTO - Buscar Eleitor
+[2026-04-28 10:03:46] GERENCIAMENTO - Listar Eleitores
+[2026-04-28 10:10:24] GERENCIAMENTO - Listar Eleitores
