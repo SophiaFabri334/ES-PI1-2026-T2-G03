@@ -7,36 +7,6 @@ import consultas as consultas  # Modulo de conexao e queries do banco de dados
 import util as util       # Modulo de funcoes utilitarias (validacao, logs, etc.)
 
 # =============================================================================
-# FUNCOES AUXILIARES
-# =============================================================================
-
-def verificar_cpf_existe(cpf):
-    """
-    Verifica se o CPF ja existe no banco de dados.
-    Busca nas tabelas 'usuarios' e 'mesarios' para evitar duplicidade.
-    
-    Parametros:
-        cpf (str): CPF a ser verificado (apenas numeros)
-    
-    Retorna:
-        bool: True se CPF ja existe, False caso contrario
-    """
-    try:
-        # Busca na tabela de usuarios (eleitores comuns)
-        consultas.cursor.execute("SELECT cpf FROM usuarios WHERE cpf = %s", (cpf,))
-        if consultas.cursor.fetchone():
-            return True
-        
-        # Busca na tabela de mesarios
-        consultas.cursor.execute("SELECT cpf FROM mesarios WHERE cpf = %s", (cpf,))
-        if consultas.cursor.fetchone():
-            return True
-        
-        return False
-    except:
-        return False
-
-# =============================================================================
 # MENU PRINCIPAL
 # Loop principal do sistema - executa ate o usuario escolher sair (opcao 3)
 # =============================================================================
@@ -114,7 +84,7 @@ while opcao != 3:
                     continue
                 
                 # RF001.03 - Verificar duplicidade de CPF
-                if verificar_cpf_existe(cpf):
+                if consultas.verificar_cpf_existe(cpf):
                     print("\nErro: CPF ja cadastrado no sistema!\n")
                     util.salvar_log("ERRO - Tentativa de cadastro com CPF duplicado")
                     continue
@@ -123,12 +93,6 @@ while opcao != 3:
                 if not util.validar_titulo(titulo):
                     print("\nErro: Titulo inválido! Verifique os digitos.\n")
                     util.salvar_log("ERRO - Titulo de eleitor invalido informado")
-                    continue
-                
-                # RF001.03 - Verificar duplicidade de Titulo
-                if verificar_cpf_existe(cpf):
-                    print("\nErro: Titulo de eleitor ja cadastrado no sistema!\n")
-                    util.salvar_log("ERRO - Tentativa de cadastro com titulo de eleitor duplicado")
                     continue
 
                 # RF001.01 - Perguntar se e mesario

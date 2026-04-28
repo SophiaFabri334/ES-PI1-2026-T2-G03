@@ -179,3 +179,18 @@ VOTAÇÃO - Resultados
 [2026-04-28 10:03:36] GERENCIAMENTO - Buscar Eleitor
 [2026-04-28 10:03:46] GERENCIAMENTO - Listar Eleitores
 [2026-04-28 10:10:24] GERENCIAMENTO - Listar Eleitores
+[2026-04-28 10:31:34] GERENCIAMENTO - Voltar ao menu principal
+[2026-04-28 10:31:40] Opcao de votacao selecionado
+[2026-04-28 10:31:42] VOTACAO - Abrir sistema de votacao
+[2026-04-28 10:31:44] VOTACAO - Resultados
+[2026-04-28 10:36:52] Opcao de gerenciamento selecionado
+[2026-04-28 10:36:54] GERENCIAMENTO - Cadastrar Eleitor
+[2026-04-28 10:38:52] MENU INICIAL - Opcao invalida
+[2026-04-28 10:38:52] MENU INICIAL - Opcao invalida
+[2026-04-28 10:38:57] Opcao de gerenciamento selecionado
+[2026-04-28 10:38:58] GERENCIAMENTO - Cadastrar Eleitor
+[2026-04-28 10:41:17] Opcao de gerenciamento selecionado
+[2026-04-28 10:41:18] GERENCIAMENTO - Cadastrar Eleitor
+[2026-04-28 10:44:04] Opcao de gerenciamento selecionado
+[2026-04-28 10:44:06] GERENCIAMENTO - Cadastrar Eleitor
+[2026-04-28 10:44:28] ERRO - Tentativa de cadastro com CPF duplicado

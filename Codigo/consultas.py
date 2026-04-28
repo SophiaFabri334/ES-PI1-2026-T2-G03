@@ -65,3 +65,23 @@ def remover_eleitor(cpf):
     cursor.execute("DELETE FROM eleitores WHERE cpf = %s", (cpf,))
     conexao.commit()
     cursor.close()
+
+def verificar_cpf_existe(cpf):
+    """
+    Verifica se o CPF ja existe no banco de dados.
+    Busca nas tabelas 'eleitores' para evitar duplicidade.
+    
+    Parametros:
+        cpf (str): CPF a ser verificado (apenas numeros)
+    
+    Retorna:
+        bool: True se CPF ja existe, False caso contrario
+    """
+    try:
+        # Busca na tabela de usuarios (eleitores comuns)
+        cursor.execute("SELECT 1 FROM eleitores WHERE cpf = %s LIMIT 1", (cpf,))
+        return cursor.fetchone() is not None
+
+    except Exception as e:
+        print("Erro ao verificar CPF:", e)
+        return False
