@@ -43,7 +43,7 @@ while opcao != 3:
             print("3 - Remover Eleitor")
             print("4 - Buscar Eleitor")
             print("5 - Listar Eleitores")
-            print("6 - Gerenciar Candidatos")
+            print("6 - Cadastrar Candidatos")
             print("0 - Voltar ao menu principal")
             print("----------------------------------")
             
@@ -65,8 +65,10 @@ while opcao != 3:
                 
                 # RF001.01 - Solicitar nome completo
                 nome = input("Digite o nome completo: ").strip()
-                if not nome:
-                    print("\nErro: Nome nao pode estar vazio!\n")
+
+                partes = nome.strip().split()
+                if len(partes) < 2:
+                    print("\nErro: Digite o nome e o sobrenome\n")
                     continue
                 
                 
@@ -123,7 +125,7 @@ while opcao != 3:
                     resp_mesario = True
 
                 # RF001.04 - Gerar chave de acesso exclusiva
-                chave_acesso = util.gerar_chave_acesso()
+                chave_acesso = util.gerar_chave_acesso(nome)
                 
                 # Inserir no banco de dados
                 try:
@@ -372,11 +374,11 @@ while opcao != 3:
                 util.salvar_log("GERENCIAMENTO - Listar Eleitores")
             
             # ---------------------------------------------------------
-            # GERENCIAR CANDIDATOS (RF001.09 a RF001.14) - Opcional
+            # CADASTRAR CANDIDATOS (RF001.09 a RF001.14) - Opcional
             # ---------------------------------------------------------
             elif opcaoGerenciamento == 6:
-                print("Entrou em Gerenciamento -> Gerenciar Candidatos\n")
-                util.salvar_log("GERENCIAMENTO - Gerenciar Candidatos")
+                print("Entrou em Gerenciamento -> Cadastrar Candidatos\n")
+                util.salvar_log("GERENCIAMENTO - Cadastrar Candidatos")
             
             # Voltar ao menu principal
             elif opcaoGerenciamento == 0:
@@ -400,8 +402,9 @@ while opcao != 3:
         while opcaoVotacao != 0:
             print("-----------VOTACAO-----------")
             print("1 - Abrir sistema de votacao")
-            print("2 - Resultados")
-            print("3 - Auditoria")
+            print("2 - Encerrar sistema de votacao")
+            print("3 - Resultados da Votação")
+            print("4 - Auditoria da votação")
             print("0 - Sair")
             print("----------------------------------")
             
@@ -420,61 +423,21 @@ while opcao != 3:
                 util.salvar_log("VOTACAO - Abrir sistema de votacao")
             
             # ---------------------------------------------------------
+            # ENECERRAR SISTEMA DE VOTACAO (RF002.03)
+            # ---------------------------------------------------------
+            elif opcaoVotacao == 2:
+                print("Entrou em Votacao -> Encerrar sistema de votacao\n")
+                util.salvar_log("VOTACAO - Encerrar sistema de votacao")
+
+            # ---------------------------------------------------------
             # RESULTADOS DA VOTACAO (RF002.03)
-            # Submenu com opcoes de relatorios
             # ---------------------------------------------------------
             elif opcaoVotacao == 2:
                 print("Entrou em Votacao -> Resultados\n")
                 util.salvar_log("VOTACAO - Resultados")
             
-                opcaoVotacaoResultados = -1
-                while opcaoVotacaoResultados != 0:
-                    print("-----------VOTACAO RESULTADOS-----------")
-                    print("1 - Boletim de urna")
-                    print("2 - Estatistica")
-                    print("3 - Votos por partido")
-                    print("4 - Validacao integridade")
-                    print("0 - Voltar")
-                    print("----------------------------------")
-                    
-                    try:
-                        opcaoVotacaoResultados = int(input("Selecione uma opcao: "))
-                    except:
-                        print("Digite um numero valido!")
-                        opcaoVotacaoResultados = -1
-                    print("----------------------------------\n")
-
-                    # RF002.03.02 - Boletim de urna
-                    if opcaoVotacaoResultados == 1:
-                        print("Entrou em Votacao Resultados -> Boletim de urna\n")
-                        util.salvar_log("VOTACAO RESULTADOS - Boletim de urna")
-                    
-                    # RF002.03.04 - Estatistica de comparecimento
-                    elif opcaoVotacaoResultados == 2:
-                        print("Entrou em Votacao Resultados -> Estatistica\n")
-                        util.salvar_log("VOTACAO RESULTADOS - Estatistica")
-                    
-                    # RF002.03.05 - Votos por partido
-                    elif opcaoVotacaoResultados == 3:
-                        print("Entrou em Votacao Resultados -> Votos por partido\n")
-                        util.salvar_log("VOTACAO RESULTADOS - Votos por partido")
-                    
-                    # RF002.03.06 - Validacao de integridade
-                    elif opcaoVotacaoResultados == 4:
-                        print("Entrou em Votacao Resultados -> Validacao integridade\n")
-                        util.salvar_log("VOTACAO RESULTADOS - Validacao integridade")
-                    
-                    elif opcaoVotacaoResultados == 0:
-                        print("Voltando...\n")
-                        util.salvar_log("VOTACAO RESULTADOS - Voltar")
-                    
-                    else:
-                        print("Votacao -> Resultados -> Opcao invalida\n")
-                        util.salvar_log("Votacao -> Resultados -> Opcao invalida")
-            
             # ---------------------------------------------------------
             # AUDITORIA DA VOTACAO (RF002.02)
-            # Logs e protocolos para fiscalizacao
             # ---------------------------------------------------------
             elif opcaoVotacao == 3:
                 print("Entrou em Votacao -> Auditoria\n")
@@ -483,8 +446,8 @@ while opcao != 3:
                 opcaoVotacaoAuditoria = -1
                 while opcaoVotacaoAuditoria != 0:
                     print("-----------VOTACAO AUDITORIA-----------")
-                    print("1 - Logs Ocorrencia")
-                    print("2 - Protocolos")
+                    print("1 - Exibição de Logs de Ocorrências")
+                    print("2 - Exibição dos Protocolos de Votação")
                     print("0 - Voltar")
                     print("----------------------------------")
                     
@@ -497,13 +460,13 @@ while opcao != 3:
 
                     # RF002.02.01 - Logs de ocorrencias
                     if opcaoVotacaoAuditoria == 1:
-                        print("Entrou em Votacao Auditoria -> Logs Ocorrencia\n")
-                        util.salvar_log("VOTACAO AUDITORIA - Logs Ocorrencia")
+                        print("Entrou em Votacao Auditoria -> Exibição de Logs de Ocorrências\n")
+                        util.salvar_log("VOTACAO AUDITORIA - Exibição de Logs de Ocorrências")
                     
-                    # RF002.02.02 - Protocolos de votacao
+                    # RF002.02.02 - Exibição dos Protocolos de Votação de votacao
                     elif opcaoVotacaoAuditoria == 2:
-                        print("Entrou em Votacao Auditoria -> Protocolos\n")
-                        util.salvar_log("VOTACAO AUDITORIA - Protocolos")
+                        print("Entrou em Votacao Auditoria -> Exibição dos Protocolos de Votação\n")
+                        util.salvar_log("VOTACAO AUDITORIA - Exibição dos Protocolos de Votação")
                     
                     elif opcaoVotacaoAuditoria == 0:
                         print("Voltando...\n")

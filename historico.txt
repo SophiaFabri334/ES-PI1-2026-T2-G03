@@ -236,3 +236,55 @@ VOTAÇÃO - Resultados
 [2026-04-28 11:12:50] ERRO - Tentativa de cadastro com CPF duplicado
 [2026-04-28 11:13:11] ERRO - Tentativa de cadastro com Titulo de eleitor duplicado
 [2026-04-28 11:13:24] ERRO - Titulo de eleitor invalido informado
+[2026-04-28 11:40:04] MENU INICIAL - Opcao invalida
+[2026-04-28 11:40:04] MENU INICIAL - Opcao invalida
+[2026-04-28 11:40:18] Opcao de gerenciamento selecionado
+[2026-04-28 11:40:22] Gerenciamento -> Opcao invalida
+[2026-04-28 11:40:26] Gerenciamento -> Opcao invalida
+[2026-04-28 11:40:29] GERENCIAMENTO - Cadastrar Eleitor
+[2026-04-28 11:40:40] ERRO - CPF invalido informado
+[2026-04-28 11:41:06] ERRO - Titulo de eleitor invalido informado
+[2026-04-28 11:41:19] ERRO - Titulo de eleitor invalido informado
+[2026-04-28 11:41:44] ERRO - Titulo de eleitor invalido informado
+[2026-04-28 11:42:08] ERRO - Titulo de eleitor invalido informado
+[2026-04-28 11:43:56] ERRO - Titulo de eleitor invalido informado
+[2026-04-28 11:44:09] Opcao de gerenciamento selecionado
+[2026-04-28 11:44:48] GERENCIAMENTO - Buscar Eleitor
+[2026-04-28 11:45:55] Gerenciamento -> Opcao invalida
+[2026-04-28 11:45:55] Gerenciamento -> Opcao invalida
+[2026-04-28 11:46:31] Opcao de gerenciamento selecionado
+[2026-04-28 11:46:32] GERENCIAMENTO - Cadastrar Eleitor
+[2026-04-28 11:46:52] SUCESSO - Eleitor cadastrado: Sophia
+[2026-05-07 10:47:38] Opcao de gerenciamento selecionado
+[2026-05-07 10:47:42] GERENCIAMENTO - Cadastrar Eleitor
+[2026-05-07 10:49:15] ERRO - Tentativa de cadastro com CPF duplicado
+[2026-05-07 10:49:55] SUCESSO - Eleitor cadastrado: Lua
+[2026-05-07 11:09:19] GERENCIAMENTO - Voltar ao menu principal
+[2026-05-07 11:13:49] MENU INICIAL - Opcao invalida
+[2026-05-07 11:13:49] MENU INICIAL - Opcao invalida
+[2026-05-07 11:13:51] MENU INICIAL - Opcao invalida
+[2026-05-07 11:13:51] MENU INICIAL - Opcao invalida
+[2026-05-07 11:16:34] Opcao de gerenciamento selecionado
+[2026-05-07 11:16:35] GERENCIAMENTO - Cadastrar Eleitor
+[2026-05-07 11:17:13] SUCESSO - Eleitor cadastrado: Sophia Fabri
+[2026-05-07 11:17:15] GERENCIAMENTO - Cadastrar Eleitor
+[2026-05-07 11:18:56] Opcao de gerenciamento selecionado
+[2026-05-07 11:18:57] GERENCIAMENTO - Cadastrar Eleitor
+[2026-05-07 11:19:26] Opcao de gerenciamento selecionado
+[2026-05-07 11:19:27] GERENCIAMENTO - Cadastrar Eleitor
+[2026-05-07 11:19:39] ERRO - Titulo de eleitor invalido informado
+[2026-05-07 11:19:59] ERRO - Titulo de eleitor invalido informado
+[2026-05-07 11:21:00] ERRO - Titulo de eleitor invalido informado
+[2026-05-07 11:21:47] Opcao de gerenciamento selecionado
+[2026-05-07 11:21:48] GERENCIAMENTO - Cadastrar Eleitor
+[2026-05-07 11:22:09] ERRO - Titulo de eleitor invalido informado
+[2026-05-07 11:24:55] Opcao de gerenciamento selecionado
+[2026-05-07 11:24:57] GERENCIAMENTO - Cadastrar Eleitor
+[2026-05-07 11:25:05] ERRO - Titulo de eleitor invalido informado
+[2026-05-07 11:25:18] ERRO - Titulo de eleitor invalido informado
+[2026-05-07 11:53:22] Opcao de gerenciamento selecionado
+[2026-05-07 11:53:22] GERENCIAMENTO - Cadastrar Eleitor
+[2026-05-07 11:53:35] ERRO - Titulo de eleitor invalido informado
+[2026-05-08 10:27:06] Opcao de gerenciamento selecionado
+[2026-05-08 10:27:07] GERENCIAMENTO - Cadastrar Eleitor
+[2026-05-08 10:27:38] ERRO - Titulo de eleitor invalido informado

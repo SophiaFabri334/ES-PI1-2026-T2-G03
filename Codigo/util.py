@@ -45,62 +45,63 @@ def validar_cpf(cpf):
         return False
     
     return True
+
 def validar_titulo(titulo):
-    titulo = ''.join(filter(str.isdigit, titulo))
+    titulo = ''.join(filter(str.isdigit, str(titulo)))
 
-    #verificar se tem os 12 digitos 
-    if len(titulo) != 12: 
-        return false
-    
-    #verificar se os digitos sao iguais 
-    if titulo == titulo[0] * 12:
-        return false
-    
-    soma = 0 
-    pesos = [7,8,9]
-    #range(8) porque no titulo, o primeiro digito verificador é calculado usando os 8 primeiros numeros 
-    for i in range (8): 
-        soma += int(titulo[i]) * pesos[i % 3]
+    if len(titulo) != 12:
+        return False
 
-    resto = soma % 11 
+    sequencial = titulo[:8]
+    uf = titulo[8:10]
+    dv_informado = titulo[10:]
 
-    if resto < 2: 
-        digito1 = 0 
-    else: 
-        digito1 = 11 - resto 
+    pesos1 = [2, 3, 4, 5, 6, 7, 8, 9]
 
-    #verifica o primeiro digito
-    if int(titulo[10]) != digito1: 
-        return False 
-    
-    #calcula o segundo digito 
-    soma = 0 
+    soma1 = 0
+    for i in range(8):
+        soma1 += int(sequencial[i]) * pesos1[i]
 
-    for i in range(8): 
-        soma += int(titulo[i]) * ((i % 3) + 7)
+    resto1 = soma1 % 11
 
-    #calculo dos 2 numeros do estado UF e do 1 digito verificador
-    soma += int(titulo[8]) * 7 
-    soma += int(titulo[9]) * 8 
-    soma += digito1 * 9 
+    if resto1 == 10:
+        dv1 = 0
+    else:
+        dv1 = resto1
+    if uf in ["01", "02"] and dv1 == 0:
+        dv1 = 1
 
-    resto = soma % 11 
+    soma2 = (
+        int(uf[0]) * 7 +
+        int(uf[1]) * 8 +
+        dv1 * 9
+    )
 
-    if resto < 2: 
-        digito2 = 0
-    else: 
-        digito2 = 11 - resto 
+    resto2 = soma2 % 11
 
-    #verifica o segundo digito 
-    if int(titulo[11]) != digito2: 
-        return False 
-    
-    return True 
-        
-             
-   
-   
-def gerar_chave_acesso():
-    """Gera uma chave de acesso única de 8 caracteres alfanuméricos."""
-    caracteres = string.ascii_uppercase + string.digits
-    return ''.join(random.choice(caracteres) for _ in range(8))
+    if resto2 == 10:
+        dv2 = 0
+    else:
+        dv2 = resto2
+
+    if uf in ["01", "02"] and dv2 == 0:
+        dv2 = 1
+
+    dv_calculado = f"{dv1}{dv2}"
+
+    return dv_calculado == dv_informado
+
+
+def gerar_chave_acesso(nome):
+    """Gera uma chave: 2 primeiras letras do primeiro nome + 1 letra do segundo nome + 4 dígitos aleatórios."""
+
+    partes = nome.strip().split()
+    primeiro_nome = partes[0]
+    segundo_nome = partes[1]
+
+    parte1 = primeiro_nome[:2].lower()
+    parte2 = segundo_nome[0].lower()
+
+    numeros = ''.join(random.choices(string.digits, k=4))
+
+    return parte1 + parte2 + numeros
