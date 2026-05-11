@@ -25,5 +25,15 @@ CREATE TABLE eleitores (
 CREATE TABLE votos (
     id_voto INT AUTO_INCREMENT PRIMARY KEY,
     id_candidato INT,
-    FOREIGN KEY (id_candidato) REFERENCES candidatos(id_candidato)
+    FOREIGN KEY (id_candidato) REFERENCES candidatos(id_candidato),
+    data_hora datetime, 
 )
+
+CREATE TABLE urna (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    aberta TINYINT(1) DEFAULT 0,
+    data_abertura DATETIME,
+    data_fechamento DATETIME
+);
+
+INSERT INTO urna (aberta) VALUES (0);

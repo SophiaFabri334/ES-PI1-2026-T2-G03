@@ -106,35 +106,11 @@ def gerar_chave_acesso(nome):
 
     return parte1 + parte2 + numeros
 
-# solicitação de dados
-def abrir_sistema():
-    print("Sistema aberto")
-    titulo = input("Digite o título de Eleitor: ")
-    cpf_4 = input("Digite os 4 primeiros dígitos do CPF: ")
-    chave = input("Digite a chave de acesso: ")
 
-# verifica mesario
-def verifica_mesario():
-    sql = "SELECT mesario FROM eleitores WHERE titulo_eleitor=%s AND LEFT(cpf,4)=%s AND senha=%s"
-    cursor.execute(sql, (titulo, cpf_4, chave))
-    usuario_encontrado = None
-    for linha in cursor:
-        usuario_encontrado = linha
-
-#limpa votos
-def limpa_votos():
-    print("Iniciando zerézima")
-    cursor.execute("DELETE FROM votos") 
-    conexao.commit() 
-    print("Todos os votos anteriores foram apagados ")
-
-# lista candidatos
-def lista_candidatos():
-    print("Todos os candidatos estão com 0 votos:")
-    cursor.execute("SELECT numero, nome_candidato FROM candidatos")
-    
-    for c in cursor:
-        print(f"Candidato: {c['nome_candidato']} | Número: {c['numero']} | Votos: 0")
-
-    print("\nZerézima concluída.")
-
+def gerar_protocolo(numero_candidato):
+    letras = ''.join(random.choices(string.ascii_uppercase, k=2))
+    ano = datetime.now().strftime("%y")
+    numero_candidato = str(numero_candidato).zfill(2)
+    numeros_aleatorios = ''.join(random.choices(string.digits, k=5))
+    protocolo = f"V{letras}{ano}{numero_candidato}{numeros_aleatorios}"
+    return protocolo

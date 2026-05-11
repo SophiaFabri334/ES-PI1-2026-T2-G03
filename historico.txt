@@ -288,3 +288,84 @@ VOTAÇÃO - Resultados
 [2026-05-08 10:27:06] Opcao de gerenciamento selecionado
 [2026-05-08 10:27:07] GERENCIAMENTO - Cadastrar Eleitor
 [2026-05-08 10:27:38] ERRO - Titulo de eleitor invalido informado
+[2026-05-11 10:19:56] Opcao de gerenciamento selecionado
+[2026-05-11 10:19:57] GERENCIAMENTO - Cadastrar Eleitor
+[2026-05-11 10:21:32] Opcao de gerenciamento selecionado
+[2026-05-11 10:21:36] Gerenciamento -> Opcao invalida
+[2026-05-11 10:22:04] Opcao de gerenciamento selecionado
+[2026-05-11 10:22:07] GERENCIAMENTO - Cadastrar Eleitor
+[2026-05-11 10:22:14] ERRO - CPF invalido informado
+[2026-05-11 10:22:18] ERRO - CPF invalido informado
+[2026-05-11 10:24:22] MENU INICIAL - Opcao invalida
+[2026-05-11 10:24:22] MENU INICIAL - Opcao invalida
+[2026-05-11 10:24:39] Opcao de gerenciamento selecionado
+[2026-05-11 10:24:46] GERENCIAMENTO - Cadastrar Eleitor
+[2026-05-11 10:24:48] ERRO - Tentativa de cadastro sem nome e sobrenome
+[2026-05-11 10:24:50] ERRO - Tentativa de cadastro sem nome e sobrenome
+[2026-05-11 10:27:54] SUCESSO - Eleitor cadastrado: Lua Silva
+[2026-05-11 10:29:21] GERENCIAMENTO - Voltar ao menu principal
+[2026-05-11 10:29:23] Opcao de votacao selecionado
+[2026-05-11 10:29:26] VOTACAO - Abrir sistema de votacao
+[2026-05-11 10:38:10] Opcao de votacao selecionado
+[2026-05-11 10:38:30] VOTACAO - Abrir sistema de votacao
+[2026-05-11 10:39:26] Votacao -> Opcao invalida
+[2026-05-11 10:39:26] Votacao -> Opcao invalida
+[2026-05-11 10:39:28] VOTACAO - Encerrar sistema de votacao
+[2026-05-11 10:39:41] VOTACAO - Abrir sistema de votacao
+[2026-05-11 10:42:38] Votacao -> Opcao invalida
+[2026-05-11 10:42:38] Votacao -> Opcao invalida
+[2026-05-11 10:42:42] VOTACAO - Encerrar sistema de votacao
+[2026-05-11 10:43:02] VOTACAO - Abrir sistema de votacao
+[2026-05-11 10:45:05] Votacao -> Opcao invalida
+[2026-05-11 10:45:06] Votacao -> Opcao invalida
+[2026-05-11 10:45:07] VOTACAO - Encerrar sistema de votacao
+[2026-05-11 10:45:30] VOTACAO - Abrir sistema de votacao
+[2026-05-11 10:48:43] Opcao de votacao selecionado
+[2026-05-11 10:49:04] ERRO - Abrir votação -> mesario invalido
+[2026-05-11 10:49:27] Opcao de votacao selecionado
+[2026-05-11 10:49:40] ERRO - Abrir votação -> mesario invalido
+[2026-05-11 10:50:48] ERRO - Abrir votação -> mesario invalido
+[2026-05-11 10:51:30] ERRO - Abrir votação -> mesario invalido
+[2026-05-11 10:51:45] ERRO - Abrir votação -> mesario invalido
+[2026-05-11 10:52:05] VOTACAO - Abrir sistema de votacao
+[2026-05-11 11:46:06] Votacao -> Opcao invalida
+[2026-05-11 11:46:06] Votacao -> Opcao invalida
+[2026-05-11 11:46:09] VOTACAO - Encerrar sistema de votacao
+[2026-05-11 11:46:36] VOTACAO - Abrir sistema de votacao
+[2026-05-11 11:46:53] Opcao de votacao selecionado
+[2026-05-11 11:47:03] ERRO - Abrir votação -> mesario invalido
+[2026-05-11 11:49:23] Opcao de votacao selecionado
+[2026-05-11 11:49:53] VOTACAO - inicido sistema de votacao
+[2026-05-11 11:49:59] VOTACAO Iniciada - Votar
+[2026-05-11 11:50:24] ERRO - Votar -> eleitor invalido
+[2026-05-11 11:53:34] ERRO - Votar -> eleitor invalido
+[2026-05-11 11:55:55] Opcao de votacao selecionado
+[2026-05-11 11:56:11] VOTACAO - inicido sistema de votacao
+[2026-05-11 11:56:12] VOTACAO Iniciada - Votar
+[2026-05-11 11:58:55] Opcao de votacao selecionado
+[2026-05-11 11:59:09] VOTACAO - inicido sistema de votacao
+[2026-05-11 11:59:12] VOTACAO Iniciada - Votar
+[2026-05-11 12:01:07] Opcao de votacao selecionado
+[2026-05-11 12:01:23] VOTACAO - inicido sistema de votacao
+[2026-05-11 12:01:24] VOTACAO Iniciada - Votar
+[2026-05-11 12:01:45] VOTACAO Iniciada - Votar
+[2026-05-11 13:15:00] Opcao de votacao selecionado
+[2026-05-11 13:15:34] Opcao de votacao selecionado
+[2026-05-11 13:16:07] Opcao de votacao selecionado
+[2026-05-11 13:16:10] VOTACAO Iniciada - Votar
+[2026-05-11 13:16:19] ERRO - Votar -> Esse eleitor já votou nessa eleiçãoo
+[2026-05-11 13:19:42] Opcao de votacao selecionado
+[2026-05-11 13:19:43] VOTACAO Iniciada - Votar
+[2026-05-11 13:20:03] ERRO - Votar -> Esse eleitor já votou nessa eleiçãoo
+[2026-05-11 13:22:01] Opcao de votacao selecionado
+[2026-05-11 13:22:03] VOTACAO Iniciada - Votar
+[2026-05-11 13:22:27] VOTACAO Iniciada - Votar
+[2026-05-11 13:23:21] ERRO - Encerrar votação -> mesario invalido
+[2026-05-11 13:24:11] VOTACAO Iniciada - encerrar sistema de votação
+[2026-05-11 13:26:46] Opcao de votacao selecionado
+[2026-05-11 13:27:04] VOTACAO Iniciada - Votar
+[2026-05-11 13:27:21] VOTACAO Iniciada - Votar
+[2026-05-11 13:27:28] ERRO - Votar -> Esse eleitor já votou nessa eleiçãoo
+[2026-05-11 13:28:10] VOTACAO - encerrada com sucesso
+[2026-05-11 13:28:16] VOTACAO - Sair
+[2026-05-11 13:28:19] MENU INICIAL - Saindo do programa

@@ -10,7 +10,123 @@ import util as util       # Modulo de funcoes utilitarias (validacao, logs, etc.
 # MENU PRINCIPAL
 # Loop principal do sistema - executa ate o usuario escolher sair (opcao 3)
 # =============================================================================
+def menu_votacao_iniciada():
+    opcaoVotacaoIniciado = -1
+    while opcaoVotacaoIniciado != 0:
+        print("-----------VOTACAO INICIADO-----------")
+        print("1 - Votar")
+        print("2 - Fechar sistema de votação")
+        print("----------------------------------")
+        
+        try:
+            opcaoVotacaoIniciado = int(input("Selecione uma opcao: "))
+        except:
+            print("Digite um numero valido!")
+            opcaoVotacaoIniciado = -1
+        print("----------------------------------\n")
 
+        # RF002.02.01 - votar
+        if opcaoVotacaoIniciado == 1:
+            
+            util.salvar_log("VOTACAO Iniciada - Votar")
+            eleitor_valido = False
+
+            while not eleitor_valido:
+                titulo = input("Digite o título de Eleitor: ")
+                cpf_4  = input("Digite os 4 primeiros dígitos do CPF: ")
+                chave  = input("Digite a chave de acesso: ")
+                
+                if not consultas.verifica_eleitor(titulo, cpf_4, chave, 0):
+                    print("\nErro: Eleitor invalido! Verifique os dados e tente novamente\n")
+                    util.salvar_log("ERRO - Votar -> eleitor invalido")
+                    continue
+                
+                if consultas.verifica_javotou(titulo, cpf_4, chave):
+                    print("\nErro: Eleitor invalido! Esse eleitor já votou nessa eleição\n")
+                    util.salvar_log("ERRO - Votar -> Esse eleitor já votou nessa eleiçãoo")
+                    continue
+            
+                eleitor_valido = True
+
+            
+            confirma_candidato = False 
+            while not confirma_candidato:
+                numero_candidato  = input("Digite o número do candidato que deseja votar: ")
+                resultado = consultas.retorna_candidato(numero_candidato)
+                if resultado:
+                    print("CANDIDATO SELECIONADO:\n")
+                    print("Nome:", resultado[1])
+                    print("Numero:", resultado[2])
+                    print("Partido:", resultado[3])
+
+                # Perguntar se quer votar nesse candidato
+                is_candidato_conf_input = input("Você tem certeza que quer votar nesse candidato? (S/N): ").strip().upper()
+
+                if is_candidato_conf_input not in ['S', 'N']:
+                    print("Digite apenas S ou N.")
+                    continue
+
+                if is_candidato_conf_input == 'N':
+                    print("\nVoto cancelado.\n")
+                    continue
+
+                confirma_candidato = True
+
+            protocolo = consultas.inserir_voto(resultado[0],resultado[2],titulo,cpf_4,chave)
+            if protocolo:
+                print("\nVOTO CONFIRMADO!")
+                print("PROTOCOLO:", protocolo)
+            print("----------------------------------\n")
+
+        # RF002.02.02 - encerrar sistema de votação
+        elif opcaoVotacaoIniciado == 2:
+            mesario_valido = False
+
+            while not mesario_valido:
+                titulo = input("Digite o título de Eleitor: ")
+                cpf_4  = input("Digite os 4 primeiros dígitos do CPF: ")
+                chave  = input("Digite a chave de acesso: ")
+                
+                if not consultas.verifica_eleitor(titulo, cpf_4, chave, 1):
+                    print("\nErro: Mesario invalido! Verifique os dados e tente novamente\n")
+                    util.salvar_log("ERRO - Encerrar votação -> mesario invalido")
+                    continue
+
+                mesario_valido = True
+
+            # Perguntar se deseja encerrar a votação
+            is_enc_votacao = input("Você tem certeza que quer encerrar essa votação? (S/N): ").strip().upper()
+
+            if is_enc_votacao not in ['S', 'N']:
+                print("Digite apenas S ou N.")
+                continue
+
+            if is_enc_votacao == 'N':
+                print("\nCancelando encerramento de votação.\n")
+                opcaoVotacaoIniciado = -1
+                continue
+            else:
+                chave_valida = False
+                while not chave_valida:
+                    chave_acesso  = input("Digite a chave de acesso novamente para confirmação: ")
+                    
+                    if not consultas.verifica_eleitor(titulo, cpf_4, chave_acesso, 1):
+                        print("\nErro: Chave inválida! Verifique tente novamente\n")
+                        util.salvar_log("ERRO - Encerrar votação -> chave de acesso invalida")
+                        continue
+
+                    chave_valida = True
+
+                print("\nEncerrando votação...")
+                if consultas.fechar_urna():
+                    print("VOTAÇÃO ENCERRADA COM SUCESSO!")
+                    util.salvar_log("VOTACAO - encerrada com sucesso")
+                    break
+                else:
+                    print("Erro ao encerrar votação.")
+                            
+            util.salvar_log("VOTACAO Iniciada - encerrar sistema de votação")
+                
 opcao = 0 
 while opcao != 3: 
     print("----------------------------------")
@@ -64,12 +180,18 @@ while opcao != 3:
                 util.salvar_log("GERENCIAMENTO - Cadastrar Eleitor")
                 
                 # RF001.01 - Solicitar nome completo
-                nome = input("Digite o nome completo: ").strip()
+                nome_valido = False 
+                while not nome_valido:
+                    nome = input("Digite o nome completo: ").strip()
 
-                partes = nome.strip().split()
-                if len(partes) < 2:
-                    print("\nErro: Digite o nome e o sobrenome\n")
-                    continue
+                    partes = nome.strip().split()
+                    if len(partes) < 2:
+                        print("\nErro: Digite o nome e o sobrenome\n")
+                        util.salvar_log("ERRO - Tentativa de cadastro sem nome e sobrenome")
+                        nome_valido = False
+                        continue
+
+                    nome_valido = True
                 
                 
                 cpf_valido = False 
@@ -80,7 +202,7 @@ while opcao != 3:
                     cpf = ''.join(filter(str.isdigit, cpf))  # Remove caracteres nao numericos
                     # RF001.02 - Validar CPF matematicamente
                     if not util.validar_cpf(cpf):
-                        print("\nErro: CPF invalido! Verifique os digitos. Digite um cpf válid\n")
+                        print("\nErro: CPF invalido! Verifique os digitos. Digite um cpf válido\n")
                         util.salvar_log("ERRO - CPF invalido informado")
                         continue
                     
@@ -397,92 +519,105 @@ while opcao != 3:
     elif opcao == 2:
         print("Opcao de votacao selecionado\n")
         util.salvar_log("Opcao de votacao selecionado")
-        
-        opcaoVotacao = -1
-        while opcaoVotacao != 0:
-            print("-----------VOTACAO-----------")
-            print("1 - Abrir sistema de votacao")
-            print("2 - Encerrar sistema de votacao")
-            print("3 - Resultados da Votação")
-            print("4 - Auditoria da votação")
-            print("0 - Sair")
-            print("----------------------------------")
-            
-            try:
-                opcaoVotacao = int(input("Selecione uma opcao: "))
-            except:
-                print("Digite um numero valido!")
-                opcaoVotacao = -1
-            print("----------------------------------\n")
 
-            # ---------------------------------------------------------
-            # ABRIR SISTEMA DE VOTACAO (RF002.01) - A implementar
-            # ---------------------------------------------------------
-            if opcaoVotacao == 1:
-                print("Entrou em Votacao -> Abrir sistema de votacao\n")
-                util.salvar_log("VOTACAO - Abrir sistema de votacao")
-            
-            # ---------------------------------------------------------
-            # ENECERRAR SISTEMA DE VOTACAO (RF002.03)
-            # ---------------------------------------------------------
-            elif opcaoVotacao == 2:
-                print("Entrou em Votacao -> Encerrar sistema de votacao\n")
-                util.salvar_log("VOTACAO - Encerrar sistema de votacao")
+        if consultas.urna_aberta():
+            print("\nUrna ja esta aberta!\n")
+            menu_votacao_iniciada()
 
-            # ---------------------------------------------------------
-            # RESULTADOS DA VOTACAO (RF002.03)
-            # ---------------------------------------------------------
-            elif opcaoVotacao == 2:
-                print("Entrou em Votacao -> Resultados\n")
-                util.salvar_log("VOTACAO - Resultados")
-            
-            # ---------------------------------------------------------
-            # AUDITORIA DA VOTACAO (RF002.02)
-            # ---------------------------------------------------------
-            elif opcaoVotacao == 3:
-                print("Entrou em Votacao -> Auditoria\n")
-                util.salvar_log("VOTACAO - Auditoria")
+            util.salvar_log("VOTACAO - Urna ja aberta")
+        else:
+            opcaoVotacao = -1
+            while opcaoVotacao != 0:
+                print("-----------VOTACAO-----------")
+                print("1 - Abrir sistema de votacao")
+                print("2 - Resultados da Votação")
+                print("3 - Auditoria da votação")
+                print("0 - Sair")
+                print("----------------------------------")
+                
+                try:
+                    opcaoVotacao = int(input("Selecione uma opcao: "))
+                except:
+                    print("Digite um numero valido!")
+                    opcaoVotacao = -1
+                print("----------------------------------\n")
 
-                opcaoVotacaoAuditoria = -1
-                while opcaoVotacaoAuditoria != 0:
-                    print("-----------VOTACAO AUDITORIA-----------")
-                    print("1 - Exibição de Logs de Ocorrências")
-                    print("2 - Exibição dos Protocolos de Votação")
-                    print("0 - Voltar")
-                    print("----------------------------------")
-                    
-                    try:
-                        opcaoVotacaoAuditoria = int(input("Selecione uma opcao: "))
-                    except:
-                        print("Digite um numero valido!")
-                        opcaoVotacaoAuditoria = -1
+                # ---------------------------------------------------------
+                # ABRIR SISTEMA DE VOTACAO (RF002.01) 
+                # ---------------------------------------------------------
+                if opcaoVotacao == 1:
+                    mesario_valido = False
+
+                    while not mesario_valido:
+                        titulo = input("Digite o título de Eleitor: ")
+                        cpf_4  = input("Digite os 4 primeiros dígitos do CPF: ")
+                        chave  = input("Digite a chave de acesso: ")
+                        
+                        if not consultas.verifica_eleitor(titulo, cpf_4, chave, 1):
+                            print("\nErro: Mesario invalido! Verifique os dados e tente novamente\n")
+                            util.salvar_log("ERRO - Abrir votação -> mesario invalido")
+                            continue
+
+                        mesario_valido = True
+
+                    print("\nMesário validado com sucesso!\n")
+                    print("\nExecutando a Zerézima...\n")
+                    consultas.limpa_votos()
+                    consultas.abrir_urna()
+                    menu_votacao_iniciada()
                     print("----------------------------------\n")
 
-                    # RF002.02.01 - Logs de ocorrencias
-                    if opcaoVotacaoAuditoria == 1:
-                        print("Entrou em Votacao Auditoria -> Exibição de Logs de Ocorrências\n")
-                        util.salvar_log("VOTACAO AUDITORIA - Exibição de Logs de Ocorrências")
-                    
-                    # RF002.02.02 - Exibição dos Protocolos de Votação de votacao
-                    elif opcaoVotacaoAuditoria == 2:
-                        print("Entrou em Votacao Auditoria -> Exibição dos Protocolos de Votação\n")
-                        util.salvar_log("VOTACAO AUDITORIA - Exibição dos Protocolos de Votação")
-                    
-                    elif opcaoVotacaoAuditoria == 0:
-                        print("Voltando...\n")
-                        util.salvar_log("VOTACAO AUDITORIA - Voltar")
-                    
-                    else:
-                        print("Votacao -> Auditoria -> Opcao invalida\n")
-                        util.salvar_log("Votacao -> Auditoria -> Opcao invalida")
+                elif opcaoVotacao == 2:
+                    print("Entrou em Votacao -> Resultados\n")
+                    util.salvar_log("VOTACAO - Resultados")
+                
+                # ---------------------------------------------------------
+                # AUDITORIA DA VOTACAO (RF002.02)
+                # ---------------------------------------------------------
+                elif opcaoVotacao == 3:
+                    print("Entrou em Votacao -> Auditoria\n")
+                    util.salvar_log("VOTACAO - Auditoria")
 
-            elif opcaoVotacao == 0:
-                print("Saindo do modulo de votacao...\n")
-                util.salvar_log("VOTACAO - Sair")
-            
-            else:
-                print("Votacao -> Opcao invalida\n")
-                util.salvar_log("Votacao -> Opcao invalida")
+                    opcaoVotacaoAuditoria = -1
+                    while opcaoVotacaoAuditoria != 0:
+                        print("-----------VOTACAO AUDITORIA-----------")
+                        print("1 - Exibição de Logs de Ocorrências")
+                        print("2 - Exibição dos Protocolos de Votação")
+                        print("0 - Voltar")
+                        print("----------------------------------")
+                        
+                        try:
+                            opcaoVotacaoAuditoria = int(input("Selecione uma opcao: "))
+                        except:
+                            print("Digite um numero valido!")
+                            opcaoVotacaoAuditoria = -1
+                        print("----------------------------------\n")
+
+                        # RF002.02.01 - Logs de ocorrencias
+                        if opcaoVotacaoAuditoria == 1:
+                            print("Entrou em Votacao Auditoria -> Exibição de Logs de Ocorrências\n")
+                            util.salvar_log("VOTACAO AUDITORIA - Exibição de Logs de Ocorrências")
+                        
+                        # RF002.02.02 - Exibição dos Protocolos de Votação de votacao
+                        elif opcaoVotacaoAuditoria == 2:
+                            print("Entrou em Votacao Auditoria -> Exibição dos Protocolos de Votação\n")
+                            util.salvar_log("VOTACAO AUDITORIA - Exibição dos Protocolos de Votação")
+                        
+                        elif opcaoVotacaoAuditoria == 0:
+                            print("Voltando...\n")
+                            util.salvar_log("VOTACAO AUDITORIA - Voltar")
+                        
+                        else:
+                            print("Votacao -> Auditoria -> Opcao invalida\n")
+                            util.salvar_log("Votacao -> Auditoria -> Opcao invalida")
+
+                elif opcaoVotacao == 0:
+                    print("Saindo do modulo de votacao...\n")
+                    util.salvar_log("VOTACAO - Sair")
+                
+                else:
+                    print("Votacao -> Opcao invalida\n")
+                    util.salvar_log("Votacao -> Opcao invalida")
     
     # =================================================================
     # SAIR DO SISTEMA
