@@ -162,7 +162,6 @@ while opcao != 3:
     # =================================================================
     if opcao == 1:
         print("Opcao de gerenciamento selecionado\n")
-        util.salvar_log("Opcao de gerenciamento selecionado")
 
         opcaoGerenciamento = -1
         while opcaoGerenciamento != 0:
@@ -190,7 +189,6 @@ while opcao != 3:
             # ---------------------------------------------------------
             if opcaoGerenciamento == 1:
                 print("=== CADASTRO DE ELEITOR ===\n")
-                util.salvar_log("GERENCIAMENTO - Cadastrar Eleitor")
                 
                 # RF001.01 - Solicitar nome completo
                 nome_valido = False 
@@ -293,7 +291,6 @@ while opcao != 3:
             # ---------------------------------------------------------
             elif opcaoGerenciamento == 2:
                 print("=== EDITAR ELEITOR ===\n")
-                util.salvar_log("GERENCIAMENTO - Editar Eleitor")
                 
                 # Solicitar CPF para busca
                 cpf_busca = input("Digite o CPF do eleitor a editar: ").strip()
@@ -390,7 +387,6 @@ while opcao != 3:
             # ---------------------------------------------------------
             elif opcaoGerenciamento == 3:
                 print("=== REMOVER ELEITOR ===\n")
-                util.salvar_log("GERENCIAMENTO - Remover Eleitor")
                 
                 # Solicitar CPF para busca
                 cpf_busca = input("Digite o CPF do eleitor a remover: ").strip()
@@ -485,8 +481,6 @@ while opcao != 3:
                 except Exception as e:
                     print("\nErro ao buscar eleitores: " + str(e) + "\n")
                     util.salvar_log("ERRO - Falha ao buscar eleitores: " + str(e))
-
-                util.salvar_log("GERENCIAMENTO - Buscar Eleitor")
             
             # ---------------------------------------------------------
             # LISTAR ELEITORES (RF001.08) 
@@ -506,14 +500,12 @@ while opcao != 3:
                         print(f"Ja votou: {"Não" if res[4] == None else "Sim"}")
                         print(f"Mesario: {"Sim" if res[5] == 1 else "Não"}")
                         print("="*40 + "\n")
-                util.salvar_log("GERENCIAMENTO - Listar Eleitores")
             
             # ---------------------------------------------------------
             # CADASTRAR CANDIDATOS (RF001.09 a RF001.14) - Opcional
             # ---------------------------------------------------------
             elif opcaoGerenciamento == 6:
                 print("=== GERENCIAMENTO DE CANDIDATOS ===\n")
-                util.salvar_log("GERENCIAMENTO - Candidatos")
 
                 opcaoCandidatos = -1
                 while opcaoCandidatos != 0:
@@ -801,21 +793,19 @@ while opcao != 3:
                     
                     elif opcaoCandidatos == 0:
                         print("Voltando ao menu de gerenciamento...\n")
-                        util.salvar_log("GERENCIAMENTO CANDIDATOS - Voltar")
                     
                     else:
                         print("Opção inválida!\n")
-                        util.salvar_log("GERENCIAMENTO CANDIDATOS - Opção inválida")
+                        util.salvar_log("GERENCIAMENTO CANDIDATOS - ERRO: Opção inválida")
             
             # Voltar ao menu principal
             elif opcaoGerenciamento == 0:
                 print("Voltando ao menu principal...\n")
-                util.salvar_log("GERENCIAMENTO - Voltar ao menu principal")
             
             # Opcao invalida
             else:
                 print("Gerenciamento -> Opcao invalida\n")
-                util.salvar_log("Gerenciamento -> Opcao invalida")
+                util.salvar_log("Gerenciamento -> ERRO: Opcao invalida do menu")
     
     # =================================================================
     # MODULO DE VOTACAO (RF002)
@@ -875,8 +865,6 @@ while opcao != 3:
 
                 elif opcaoVotacao == 2:
                     print("Entrou em Votacao -> Resultados\n")
-                    util.salvar_log("VOTACAO - Resultados")
-
                     opcaoResultados = 1
 
                     while opcaoResultados != 0:
@@ -888,13 +876,7 @@ while opcao != 3:
                         print("5 - Validação de Integridade")
                         print("0 - Voltar")
 
-                        opcaoResultados = input("Selecione uma opção: ")
-
-                        if opcaoResultados.isdigit(): 
-                            opcaoResultados = int(opcaoResultados)
-                        else: 
-                            print("Digite apenas numeros")
-                            opcaoResultados = 1
+                        opcaoResultados = int(input("Selecione uma opção: "))
 
                         if opcaoResultados == 1: 
                             boletim_urna()
@@ -903,7 +885,7 @@ while opcao != 3:
                             declaracao_vencedor()
 
                         elif opcaoResultados == 3: 
-                             estatistica_comparecimento()
+                            estatistica_comparecimento()
 
                         elif opcaoResultados == 4: 
                             votos_por_partido()
@@ -915,6 +897,7 @@ while opcao != 3:
                             print("Voltando ao menu de votação")
 
                         else: 
+                            util.salvar_log("VOTACAO - Resultado - ERRO: Selecionado opção inválida do menu")
                             print("Opção inválida")
 
 
@@ -925,7 +908,6 @@ while opcao != 3:
                 # ---------------------------------------------------------
                 elif opcaoVotacao == 3:
                     print("Entrou em Votacao -> Auditoria\n")
-                    util.salvar_log("VOTACAO - Auditoria")
 
                     opcaoVotacaoAuditoria = -1
                     while opcaoVotacaoAuditoria != 0:
@@ -972,11 +954,10 @@ while opcao != 3:
                         
                         elif opcaoVotacaoAuditoria == 0:
                             print("Voltando...\n")
-                            util.salvar_log("AUDITORIA - Voltar")
                         
                         else:
                             print("Votacao -> Auditoria -> Opcao invalida\n")
-                            util.salvar_log("Votacao -> Auditoria -> Opcao invalida")
+                            util.salvar_log("Votacao -> Auditoria -> ERRO: Opcao invalida do menuß")
 
                 elif opcaoVotacao == 0:
                     print("Saindo do modulo de votacao...\n")
@@ -990,13 +971,10 @@ while opcao != 3:
     # SAIR DO SISTEMA
     # =================================================================
     elif opcao == 3:
-        print("Saindo do programa\n")
-        util.salvar_log("MENU INICIAL - Saindo do programa")
-    
+        print("Saindo do programa\n")    
     # Opcao invalida no menu principal
     else:
         print("Opcao invalida\n")
-        util.salvar_log("MENU INICIAL - Opcao invalida")
 
 # =============================================================================
 # ENCERRAMENTO DO SISTEMA

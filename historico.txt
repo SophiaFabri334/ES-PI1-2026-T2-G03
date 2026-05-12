@@ -369,3 +369,24 @@ VOTAÇÃO - Resultados
 [2026-05-11 13:28:10] VOTACAO - encerrada com sucesso
 [2026-05-11 13:28:16] VOTACAO - Sair
 [2026-05-11 13:28:19] MENU INICIAL - Saindo do programa
+[2026-05-12 09:38:58] Opcao de votacao selecionado
+[2026-05-12 09:39:34] ABERTURA: Votação iniciada com sucesso. Total de votos zerado.
+[2026-05-12 09:40:20] SUCESSO: Voto realizado com sucesso
+[2026-05-12 09:40:51] SUCESSO: Voto realizado com sucesso
+[2026-05-12 09:41:06] ALERTA: Tentativa de acesso negado - Validação de mesário falhou
+[2026-05-12 09:41:16] ALERTA: Tentativa de acesso negado - Validação de mesário falhou
+[2026-05-12 09:41:34] ENCERRAMENTO: Votação finalizada com sucesso.
+[2026-05-12 09:41:39] VOTACAO - Auditoria
+[2026-05-12 09:41:41] AUDITORIA - Exibição de Logs de Ocorrências
+[2026-05-12 09:41:55] AUDITORIA - Exibição dos Protocolos de Votação
+[2026-05-12 09:47:07] Votacao -> Auditoria -> Opcao invalida
+[2026-05-12 09:47:07] Votacao -> Auditoria -> Opcao invalida
+[2026-05-12 09:50:05] Votacao -> Auditoria -> Opcao invalida
+[2026-05-12 09:50:05] Votacao -> Auditoria -> Opcao invalida
+[2026-05-12 09:50:17] Votacao -> Auditoria -> Opcao invalida
+[2026-05-12 09:50:17] Votacao -> Auditoria -> Opcao invalida
+[2026-05-12 09:50:19] Votacao -> Auditoria -> Opcao invalida
+[2026-05-12 09:50:19] Votacao -> Auditoria -> Opcao invalida
+[2026-05-12 09:50:40] GERENCIAMENTO CANDIDATOS - Cadastrar
+[2026-05-12 09:50:54] SUCESSO - Candidato cadastrado: Luis Paulo (Nº 89)
+[2026-05-12 09:50:58] GERENCIAMENTO CANDIDATOS - Listar
