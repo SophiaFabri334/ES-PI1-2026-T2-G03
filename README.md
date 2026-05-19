@@ -9,7 +9,7 @@
 | Sophia Fabri      |
 
 # Funcionalidades Principais
-- [ ] Cadastro de Candidatos
+- [X] Cadastro de Candidatos
 - [X] Cadastrar/Editar/Listar/Deletar Eleitores (Usuários)
 - [ ] Realização de Voto
 - [ ] Controle de Voto Único
