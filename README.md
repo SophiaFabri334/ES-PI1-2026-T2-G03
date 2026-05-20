@@ -16,7 +16,7 @@
 - ✅​ Controle de Voto Único
 - ✅​ Listagem de Votantes
 - ✅​ Apuração de Resultados
-- ​❌​ Criptografia
+- ​✅​ Criptografia
 - ​✅ Voto Nulo
 - ❌​ Limpar tela
 - ❌​ Resultados dos votos
