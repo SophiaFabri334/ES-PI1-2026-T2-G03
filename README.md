@@ -15,10 +15,11 @@
 - [X] Controle de Voto Único
 - [X] Listagem de Votantes
 - [X] Apuração de Resultados
-- [X] Criptografia
+- [] Criptografia
+- [] Descriptografia
 - [ ] Voto Nulo
 - [ ] Limpar tela
-- [X] Resultados
+- [] Resultados dos votos
 - [X] Menus e submenus
 - [X] Auditoria
 - [X] Gestão de candidatos
@@ -27,9 +28,11 @@
 - [X] Encerrar votação
 - [X] Chave de acesso
 - [X] Abertura de votação
-- [X] h
-- [X] g
-- [X] h
+- [] Boletim urna
+- [] Declaração de vencedor
+- [] Votos por partido
+- [] Estatísca de comparecimento
+- [] Validação de integridade
 
 # Tecnologias Utilizadas
 - MySQL
