@@ -5,7 +5,7 @@
 
 import consultas as consultas  # Modulo de conexao e queries do banco de dados
 import util as util       # Modulo de funcoes utilitarias (validacao, logs, etc.)
-
+import seguranca as seguranca # Modulo de criptografia conforme pedido no projeto
 # =============================================================================
 # MENU PRINCIPAL
 # Loop principal do sistema - executa ate o usuario escolher sair (opcao 3)
@@ -51,12 +51,20 @@ def menu_votacao_iniciada():
             confirma_candidato = False 
             while not confirma_candidato:
                 numero_candidato  = input("Digite o número do candidato que deseja votar: ")
+                id_candidato = 0
+                numero = 0
+
                 resultado = consultas.retorna_candidato(numero_candidato)
-                if resultado:
+                if not resultado:
+                    print("Candidato não encontrado - Seu voto está selecionado como NULO")
+                else:
                     print("CANDIDATO SELECIONADO:\n")
                     print("Nome:", resultado[1])
                     print("Numero:", resultado[2])
                     print("Partido:", resultado[3])
+                    id_candidato = resultado[0]
+                    numero = resultado[2]
+                
 
                 # Perguntar se quer votar nesse candidato
                 is_candidato_conf_input = input("Você tem certeza que quer votar nesse candidato? (S/N): ").strip().upper()
@@ -71,7 +79,7 @@ def menu_votacao_iniciada():
 
                 confirma_candidato = True
 
-            protocolo = consultas.inserir_voto(resultado[0],resultado[2],titulo,cpf_4,chave)
+            protocolo = consultas.inserir_voto(id_candidato,numero,titulo,cpf_4,chave)
             if protocolo:
                 print("\nVOTO CONFIRMADO!")
                 print("PROTOCOLO:", protocolo)
@@ -171,7 +179,7 @@ while opcao != 3:
             print("3 - Remover Eleitor")
             print("4 - Buscar Eleitor")
             print("5 - Listar Eleitores")
-            print("6 - Cadastrar Candidatos")
+            print("6 - Gerenciamento de Candidatos")
             print("0 - Voltar ao menu principal")
             print("----------------------------------")
             
@@ -193,7 +201,7 @@ while opcao != 3:
                 # RF001.01 - Solicitar nome completo
                 nome_valido = False 
                 while not nome_valido:
-                    nome = input("Digite o nome completo: ").strip()
+                    nome = input("Digite o nome completo: ")
 
                     partes = nome.strip().split()
                     if len(partes) < 2:
@@ -265,7 +273,7 @@ while opcao != 3:
                     mesario = 1 if is_mesario else 0
 
                     # Cadastra na tabela de eleitores
-                    consultas.inserir_eleitores(titulo, cpf, nome, chave_acesso, None, mesario)
+                    consultas.inserir_eleitores(titulo, seguranca.criptografar(cpf), nome, seguranca.criptografar(chave_acesso), None, mesario)
                     util.salvar_log("SUCESSO - Eleitor cadastrado: " + nome)
                     
                     # Exibir confirmacao e chave de acesso
@@ -971,6 +979,7 @@ while opcao != 3:
     # SAIR DO SISTEMA
     # =================================================================
     elif opcao == 3:
+        util.limpar_log()
         print("Saindo do programa\n")    
     # Opcao invalida no menu principal
     else:

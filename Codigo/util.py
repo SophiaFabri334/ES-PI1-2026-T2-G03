@@ -17,6 +17,16 @@ def salvar_log(texto):
     with open("historico.txt", "a", encoding="utf-8") as arq:
         arq.write(f"{timestamp} {texto}\n")
 
+def limpar_log():
+    """
+    Limpa log ao fechar o sistema de votação
+    Returns:
+        None
+    """
+
+    with open("historico.txt", "w", encoding="utf-8") as arq:
+        pass
+
 def validar_cpf(cpf):
     """
     Valida CPF matematicamente conforme Anexo B do documento.

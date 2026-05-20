@@ -1,7 +1,7 @@
 import mysql.connector
 from datetime import datetime
 import util as util
-
+import seguranca as seguranca 
 """
 Módulo de conexão e consultas com banco de dados MySQL
 Responsável por todas as operações CRUD e autenticação
@@ -213,7 +213,7 @@ def filtra_eleitores(pesquisa):
     sql = "SELECT E.id_eleitor, E.titulo_eleitor, E.cpf, E.nome_completo, E.ja_votou, E.mesario FROM ELEITORES E WHERE E.titulo_eleitor LIKE %s OR E.nome_completo LIKE %s OR E.cpf LIKE %s ORDER BY E.id_eleitor"
     
     valor = f"%{pesquisa}%"
-    valores = (valor, valor, valor)
+    valores = (seguranca.criptografar(valor), valor, seguranca.criptografar(valor))
 
     cursor.execute(sql, valores)
     resultado = cursor.fetchall()
@@ -230,7 +230,7 @@ def remover_eleitor(cpf):
     Returns:
         None
     """
-    cursor.execute("DELETE FROM eleitores WHERE cpf = %s", (cpf,))
+    cursor.execute("DELETE FROM eleitores WHERE cpf = %s", (seguranca.criptografar(cpf),))
     conexao.commit()
 
 def verificar_cpf_existe(cpf):
@@ -244,7 +244,7 @@ def verificar_cpf_existe(cpf):
         bool: True se CPF já existe, False caso contrário
     """
     try:
-        cursor.execute("SELECT 1 FROM eleitores WHERE cpf = %s LIMIT 1", (cpf,))
+        cursor.execute("SELECT 1 FROM eleitores WHERE cpf = %s LIMIT 1", (seguranca.criptografar(cpf),))
         return cursor.fetchone() is not None
 
     except Exception as e:
@@ -286,7 +286,7 @@ def verifica_eleitor(titulo, cpf_4, chave, tipo):
         sql = "SELECT nome_completo, mesario FROM eleitores WHERE titulo_eleitor=%s AND LEFT(cpf,4)=%s AND senha=%s "
         if tipo == 1:
             sql += " AND COALESCE(mesario,0) = 1"
-        cursor.execute(sql, (titulo, cpf_4, chave))
+        cursor.execute(sql, (titulo, seguranca.criptografar(cpf_4), seguranca.criptografar(chave)))
         return cursor.fetchone() is not None
     except Exception as e:
         print("Erro ao verificar se o mesario existe no banco:", e)
@@ -306,7 +306,7 @@ def verifica_javotou(titulo, cpf_4, chave):
     """
     try:
         sql = "SELECT ja_votou FROM eleitores WHERE titulo_eleitor=%s AND LEFT(cpf,4)=%s AND senha=%s"
-        cursor.execute(sql, (titulo, cpf_4, chave))
+        cursor.execute(sql, (titulo, seguranca.criptografar(cpf_4), seguranca.criptografar(chave)))
         resultado = cursor.fetchone()
 
         if resultado is None:
@@ -321,6 +321,7 @@ def verifica_javotou(titulo, cpf_4, chave):
     except Exception as e:
         print("Erro ao verificar se o mesario existe no banco:", e)
         return False
+    
 def limpa_votos():
     """
     Executa a Zerézima conforme RF002.01.04-05.
@@ -396,7 +397,7 @@ def atualiza_eleitor(titulo, cpf_4, chave):
     """
     try:
         sql = "UPDATE eleitores SET ja_votou = 1 WHERE titulo_eleitor=%s AND left(cpf,4)=%s AND senha=%s"
-        cursor.execute(sql, (titulo, cpf_4, chave))
+        cursor.execute(sql, (titulo, seguranca.criptografar(cpf_4), seguranca.criptografar(chave)))
         conexao.commit()
         return cursor.rowcount > 0
     except Exception as e:
