@@ -80,6 +80,7 @@ def menu_votacao_iniciada():
                 confirma_candidato = True
 
             protocolo = consultas.inserir_voto(id_candidato,numero,titulo,cpf_4,chave)
+            consultas.confirmar_limpar()
             if protocolo:
                 print("\nVOTO CONFIRMADO!")
                 print("PROTOCOLO:", protocolo)
