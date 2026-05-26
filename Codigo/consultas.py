@@ -499,3 +499,204 @@ def listar_protocolos_votacao():
     except Exception as e:
         print(f"Erro ao listar protocolos: {str(e)}")
         return []
+
+def obter_resultados_por_candidato():
+    """
+    Retorna contagem de votos por candidato para Boletim de Urna.
+    
+    Args:
+        None
+    
+    Returns:
+        list: Lista de tuplas (id, número, nome, partido, votos)
+    """
+    try:
+        # Query SQL que faz LEFT JOIN entre candidatos e votos
+        # Agrupa por candidato e conta o número de votos para cada um
+        # Ordena em ordem alfabética pelo nome do candidato
+        sql = """
+        SELECT 
+            c.id_candidato, 
+            c.numero, 
+            c.nome_candidato, 
+            c.partido,
+            COUNT(v.id_voto) as votos
+        FROM candidatos c
+        LEFT JOIN votos v ON v.id_candidato = c.id_candidato
+        GROUP BY c.id_candidato, c.numero, c.nome_candidato, c.partido
+        ORDER BY c.nome_candidato ASC
+        """
+        # Executa a query
+        cursor.execute(sql)
+        # Retorna todas as linhas do resultado
+        return cursor.fetchall()
+    except Exception as e:
+        # Se ocorrer erro na consulta, exibe mensagem e retorna lista vazia
+        print(f"Erro ao obter resultados: {str(e)}")
+        return []
+
+def obter_vencedor():
+    """
+    Retorna candidato com maior número de votos (vencedor).
+    
+    Args:
+        None
+    
+    Returns:
+        tuple: Tupla (número, nome, partido, votos) do vencedor ou None
+    """
+    try:
+        # Query SQL que seleciona o candidato com mais votos
+        # Agrupa por candidato e conta votos
+        # Ordena por votos (descendente) e limita a 1 resultado (o vencedor)
+        sql = """
+        SELECT 
+            c.numero, 
+            c.nome_candidato, 
+            c.partido,
+            COUNT(v.id_voto) as votos
+        FROM candidatos c
+        LEFT JOIN votos v ON v.id_candidato = c.id_candidato
+        GROUP BY c.id_candidato, c.numero, c.nome_candidato, c.partido
+        ORDER BY votos DESC
+        LIMIT 1
+        """
+        # Executa a query
+        cursor.execute(sql)
+        # Retorna apenas a primeira linha (o vencedor)
+        return cursor.fetchone()
+    except Exception as e:
+        # Se ocorrer erro na consulta, exibe mensagem e retorna None
+        print(f"Erro ao obter vencedor: {str(e)}")
+        return None
+
+def obter_estatistica_comparecimento():
+    """
+    Retorna estatísticas de eleitores que votaram vs total de eleitores.
+    
+    Args:
+        None
+    
+    Returns:
+        dict: Dicionário com total_eleitores, eleitores_votaram, nao_votaram, percentual
+    """
+    try:
+        # Query 1: Conta total de eleitores (excluindo mesários que é mesario = 0)
+        sql_total = "SELECT COUNT(*) FROM eleitores WHERE mesario = 0"
+        
+        # Query 2: Conta quantos eleitores já votaram (ja_votou = 1)
+        sql_votaram = "SELECT COUNT(*) FROM eleitores WHERE mesario = 0 AND ja_votou = 1"
+        
+        # Executa primeira query e obtém o total de eleitores
+        cursor.execute(sql_total)
+        total = cursor.fetchone()[0]
+        
+        # Executa segunda query e obtém quantos votaram
+        cursor.execute(sql_votaram)
+        votaram = cursor.fetchone()[0]
+        
+        # Calcula quantos NÃO votaram (total - votaram)
+        nao_votaram = total - votaram
+        
+        # Calcula o percentual de comparecimento (se há eleitores)
+        percentual = (votaram / total * 100) if total > 0 else 0
+        
+        # Retorna um dicionário com todos os dados calculados
+        return {
+            'total_eleitores': total,
+            'eleitores_votaram': votaram,
+            'nao_votaram': nao_votaram,
+            'percentual': percentual
+        }
+    except Exception as e:
+        # Se ocorrer erro na consulta, exibe mensagem e retorna dicionário vazio
+        print(f"Erro ao obter estatística: {str(e)}")
+        return {}
+
+def obter_votos_por_partido():
+    """
+    Retorna contagem de votos agrupados por partido.
+    
+    Args:
+        None
+    
+    Returns:
+        list: Lista de tuplas (partido, votos)
+    """
+    try:
+        # Query SQL que agrupa votos por partido
+        # Conta quantos votos cada partido recebeu através de seus candidatos
+        # Ordena por quantidade de votos (descendente)
+        sql = """
+        SELECT 
+            c.partido,
+            COUNT(v.id_voto) as votos
+        FROM candidatos c
+        LEFT JOIN votos v ON v.id_candidato = c.id_candidato
+        GROUP BY c.partido
+        ORDER BY votos DESC
+        """
+        # Executa a query
+        cursor.execute(sql)
+        # Retorna todas as linhas do resultado (cada partida com seus votos)
+        return cursor.fetchall()
+    except Exception as e:
+        # Se ocorrer erro na consulta, exibe mensagem e retorna lista vazia
+        print(f"Erro ao obter votos por partido: {str(e)}")
+        return []
+
+def validar_integridade_votos():
+    """
+    Valida integridade dos votos comparando o total de votos registrados
+    na urna com a quantidade de eleitores que possuem status "Já Votou".
+    
+    Args:
+        None
+    
+    Returns:
+        dict: Dicionário com informações de integridade e comparação
+    """
+    try:
+        # Query 1: Conta o total de votos registrados na urna
+        sql_total_votos = "SELECT COUNT(*) FROM votos"
+        
+        # Query 2: Conta quantos eleitores possuem status "Já Votou" (ja_votou = 1)
+        sql_eleitores_votaram = "SELECT COUNT(*) FROM eleitores WHERE ja_votou = 1"
+        
+        # Query 3: Conta total de eleitores (excluindo mesários)
+        sql_total_eleitores = "SELECT COUNT(*) FROM eleitores WHERE mesario = 0"
+        
+        # Executa query 1: total de votos na urna
+        cursor.execute(sql_total_votos)
+        total_votos = cursor.fetchone()[0]
+        
+        # Executa query 2: total de eleitores com "Já Votou"
+        cursor.execute(sql_eleitores_votaram)
+        eleitores_ja_votou = cursor.fetchone()[0]
+        
+        # Executa query 3: total de eleitores
+        cursor.execute(sql_total_eleitores)
+        total_eleitores = cursor.fetchone()[0]
+        
+        # Calcula eleitores que ainda não votaram
+        eleitores_nao_votaram = total_eleitores - eleitores_ja_votou
+        
+        # Verifica se a integridade está OK (votos = eleitores que votaram)
+        integridade_ok = (total_votos == eleitores_ja_votou)
+        
+        # Calcula diferença para análise
+        diferenca = abs(total_votos - eleitores_ja_votou)
+        
+        # Retorna dicionário com todos os dados de comparação
+        return {
+            'total_votos': total_votos,
+            'eleitores_ja_votou': eleitores_ja_votou,
+            'eleitores_nao_votaram': eleitores_nao_votaram,
+            'total_eleitores': total_eleitores,
+            'diferenca': diferenca,
+            'integridade_ok': integridade_ok
+        }
+    except Exception as e:
+        # Se ocorrer erro na consulta, exibe mensagem e retorna dicionário vazio
+        print(f"Erro ao validar integridade: {str(e)}")
+        return {}

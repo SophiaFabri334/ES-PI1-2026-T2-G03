@@ -134,19 +134,244 @@ def menu_votacao_iniciada():
                     print("Erro ao encerrar votação.")
 
 def boletim_urna():
-    print("Boletim de Urna")
+    """
+    Exibe o Boletim de Urna com contagem de votos por candidato em ordem alfabética
+    e ao final declara o vencedor da eleição.
+    """
+    # Imprime cabeçalho formatado do boletim de urna
+    print("\n" + "="*70)
+    print("BOLETIM DE URNA - RESULTADO DA VOTAÇÃO")
+    print("="*70)
+    
+    # Chama função do módulo consultas para obter todos os candidatos com seus votos
+    resultados = consultas.obter_resultados_por_candidato()
+    
+    # Verifica se há resultados; se não houver votos, exibe mensagem e sai da função
+    if not resultados:
+        print("Nenhum voto registrado ainda.\n")
+        return
+    
+    # Calcula o total de votos somando a quantidade de votos (5º elemento) de cada candidato
+    total_votos = sum(resultado[4] for resultado in resultados)
+    
+    # Exibe o total de votos registrados
+    print(f"\nTotal de votos consolidados: {total_votos}\n")
+    
+    # Imprime cabeçalho da tabela com colunas: Nº, Nome, Partido e Votos
+    print(f"{'Nº':<5} {'Nome':<40} {'Partido':<15} {'Votos':<8}")
+    print("-"*70)
+    
+    # Itera sobre cada resultado de candidato para exibir seus dados em ordem alfabética
+    for resultado in resultados:
+        # Extrai os dados do candidato: número (índice 1), nome (2), partido (3) e votos (4)
+        numero, nome, partido, votos = resultado[1], resultado[2], resultado[3], resultado[4]
+        
+        # Imprime a linha da tabela com formatação adequada (alinhamento e espaçamento)
+        print(f"{numero:<5} {nome:<40} {partido:<15} {votos:<8}")
+    
+    # Imprime linha de separação e total de votos na rodapé
+    print("-"*70)
+    print(f"{'TOTAL DE VOTOS':<5} {'':<40} {'':<15} {total_votos:<8}")
+    print("="*70)
+    
+    # Chama função do módulo consultas para obter o candidato com maior número de votos
+    vencedor = consultas.obter_vencedor()
+    
+    # Verifica se há algum vencedor (se não há votos, retorna None)
+    if vencedor:
+        # Desempacota os dados do vencedor: número, nome, partido e quantidade de votos
+        numero_venc, nome_venc, partido_venc, votos_venc = vencedor
+        
+        # Exibe linha em branco para separação visual
+        print()
+        
+        # Exibe as informações do candidato vencedor com formatação clara
+        print("="*70)
+        print("DECLARAÇÃO DE VENCEDOR")
+        print("="*70)
+        print(f"\nCANDIDATO VENCEDOR:")
+        print(f"Nome: {nome_venc}")
+        print(f"Número: {numero_venc}")
+        print(f"Partido: {partido_venc}")
+        print(f"Total de votos obtidos: {votos_venc}")
+        print("\n" + "="*70 + "\n")
+    
+    # Registra esta operação nos logs do sistema para auditoria
+    util.salvar_log("RESULTADO - Boletim de Urna consultado")
 
 def declaracao_vencedor():
-    print("Declaração de Vencedor")
+    """
+    Exibe a declaração do vencedor da votação.
+    Nota: Esta informação também é exibida ao final do Boletim de Urna.
+    """
+    # Imprime cabeçalho formatado da declaração de vencedor
+    print("\n" + "="*70)
+    print("DECLARAÇÃO DE VENCEDOR")
+    print("="*70)
+    
+    # Chama função do módulo consultas para obter o candidato com maior número de votos
+    vencedor = consultas.obter_vencedor()
+    
+    # Verifica se há algum vencedor (se não há votos, retorna None)
+    if not vencedor:
+        print("\nNenhum voto registrado ainda.\n")
+        return
+    
+    # Desempacota os dados do vencedor: número, nome, partido e quantidade de votos
+    numero, nome, partido, votos = vencedor
+    
+    # Exibe as informações do candidato vencedor com formatação clara
+    print(f"\nCANDIDATO VENCEDOR:")
+    print(f"Nome: {nome}")
+    print(f"Número: {numero}")
+    print(f"Partido: {partido}")
+    print(f"Total de votos obtidos: {votos}")
+    print("\n" + "="*70 + "\n")
+    
+    # Registra esta operação nos logs do sistema para auditoria
+    util.salvar_log("RESULTADO - Declaração de Vencedor consultada")
 
 def estatistica_comparecimento(): 
-    print("Estatística de Comparecimento")
+    """
+    Exibe estatísticas de comparecimento dos eleitores.
+    """
+    # Imprime cabeçalho formatado da estatística de comparecimento
+    print("\n" + "="*70)
+    print("ESTATÍSTICA DE COMPARECIMENTO")
+    print("="*70)
+    
+    # Chama função do módulo consultas para obter dados de comparecimento dos eleitores
+    stats = consultas.obter_estatistica_comparecimento()
+    
+    # Verifica se os dados foram carregados corretamente
+    if not stats:
+        print("\nErro ao carregar estatísticas.\n")
+        return
+    
+    # Extrai os dados do dicionário retornado: total, votaram, não votaram e percentual
+    total = stats['total_eleitores']
+    votaram = stats['eleitores_votaram']
+    nao_votaram = stats['nao_votaram']
+    percentual = stats['percentual']
+    
+    # Exibe quantidade absoluta de eleitores aptos
+    print(f"\nTotal de eleitores aptos: {total}")
+    
+    # Exibe quantidade absoluta de pessoas que votaram
+    print(f"Quantidade de pessoas que votaram: {votaram}")
+    
+    # Exibe quantidade de eleitores que não votaram
+    print(f"Eleitores que não votaram: {nao_votaram}")
+    
+    # Exibe o percentual de comparecimento em relação ao total de eleitores aptos
+    print(f"Percentual de comparecimento: {percentual:.2f}%")
+    
+    print("\n" + "="*70 + "\n")
+    
+    # Registra esta operação nos logs do sistema para auditoria
+    util.salvar_log("RESULTADO - Estatística de Comparecimento consultada")
 
 def votos_por_partido():
-    print("Votos por Partido")
+    """
+    Exibe contagem de votos agrupados por partido.
+    Mostra a somatória de votos recebidos por cada legenda partidária.
+    """
+    # Imprime cabeçalho formatado da análise de votos por partido
+    print("\n" + "="*70)
+    print("VOTOS POR PARTIDO")
+    print("="*70)
+    
+    # Chama função do módulo consultas para obter votos agrupados por partido
+    votos_partidos = consultas.obter_votos_por_partido()
+    
+    # Verifica se há dados de partidos; se não há votos, exibe mensagem e sai
+    if not votos_partidos:
+        print("\nNenhum voto registrado ainda.\n")
+        return
+    
+    # Calcula o total de votos somando a quantidade de votos (2º elemento) de cada partido
+    total_votos = sum(partido[1] for partido in votos_partidos)
+    
+    # Exibe o total de votos registrados
+    print(f"\nTotal de votos consolidados: {total_votos}\n")
+    
+    # Imprime cabeçalho da tabela com colunas: Partido e Somatória de Votos
+    print(f"{'Partido':<40} {'Somatória de Votos':<20}")
+    print("-"*70)
+    
+    # Itera sobre cada partido para exibir sua contagem de votos
+    for partido, votos in votos_partidos:
+        # Imprime a linha da tabela com formatação adequada (alinhamento e espaçamento)
+        print(f"{partido:<40} {votos:<20}")
+    
+    # Imprime linha de separação e total de votos na rodapé
+    print("-"*70)
+    print(f"{'TOTAL':<40} {total_votos:<20}")
+    print("="*70 + "\n")
+    
+    # Registra esta operação nos logs do sistema para auditoria
+    util.salvar_log("RESULTADO - Votos por Partido consultados")
 
 def validacao_integridade(): 
-    print("Validação de Integridade")
+    """
+    Exibe validação de integridade dos votos registrados.
+    Compara o total de votos na urna com a quantidade de eleitores
+    que possuem o status "Já Votou".
+    """
+    # Imprime cabeçalho formatado da validação de integridade
+    print("\n" + "="*70)
+    print("VALIDAÇÃO DE INTEGRIDADE DOS VOTOS")
+    print("="*70)
+    
+    # Chama função do módulo consultas para obter dados de validação de integridade
+    validacao = consultas.validar_integridade_votos()
+    
+    # Verifica se os dados foram carregados corretamente
+    if not validacao:
+        print("\nErro ao carregar dados de integridade.\n")
+        return
+    
+    # Extrai os dados do dicionário retornado pela função de validação
+    total_votos = validacao['total_votos']
+    eleitores_ja_votou = validacao['eleitores_ja_votou']
+    eleitores_nao_votaram = validacao['eleitores_nao_votaram']
+    total_eleitores = validacao['total_eleitores']
+    diferenca = validacao['diferenca']
+    integridade_ok = validacao['integridade_ok']
+    
+    # Seção 1: Exibe dados da urna
+    print(f"\nDADOS DA URNA:")
+    print(f"Total de votos registrados: {total_votos}")
+    
+    # Seção 2: Exibe dados dos eleitores
+    print(f"\nDADOS DOS ELEITORES:")
+    print(f"Total de eleitores aptos: {total_eleitores}")
+    print(f"Eleitores com status 'Já Votou': {eleitores_ja_votou}")
+    print(f"Eleitores que não votaram: {eleitores_nao_votaram}")
+    
+    # Seção 3: Exibe comparação entre votos e eleitores que votaram
+    print(f"\nCOMPARAÇÃO:")
+    print(f"Votos registrados na urna: {total_votos}")
+    print(f"Eleitores com 'Já Votou': {eleitores_ja_votou}")
+    print(f"Diferença: {diferenca}")
+    
+    # Seção 4: Exibe o status de integridade com símbolos visuais
+    print(f"\nSTATUS DE INTEGRIDADE:")
+    if integridade_ok:
+        # Se total de votos = eleitores que votaram, integridade está OK
+        print("✓ INTEGRIDADE CONFIRMADA")
+        print("  Os dados estão íntegros:")
+        print(f"  • Total de votos ({total_votos}) = Eleitores com 'Já Votou' ({eleitores_ja_votou})")
+    else:
+        # Se há discrepância, exibe alerta
+        print("✗ ALERTA - Inconsistência Detectada!")
+        print(f"  Existe uma diferença de {diferenca} registro(s)")
+        print(f"  • Total de votos ({total_votos}) ≠ Eleitores com 'Já Votou' ({eleitores_ja_votou})")
+    
+    print("\n" + "="*70 + "\n")
+    
+    # Registra esta operação nos logs do sistema para auditoria
+    util.salvar_log("RESULTADO - Validação de Integridade consultada")
                 
 opcao = 0 
 while opcao != 3: 
