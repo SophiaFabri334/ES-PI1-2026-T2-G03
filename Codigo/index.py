@@ -6,6 +6,7 @@
 import consultas as consultas  # Modulo de conexao e queries do banco de dados
 import util as util       # Modulo de funcoes utilitarias (validacao, logs, etc.)
 import seguranca as seguranca # Modulo de criptografia conforme pedido no projeto
+
 # =============================================================================
 # MENU PRINCIPAL
 # Loop principal do sistema - executa ate o usuario escolher sair (opcao 3)
@@ -87,7 +88,10 @@ def menu_votacao_iniciada():
                 util.registrar_log_voto_sucesso()
             print("----------------------------------\n")
 
+        # ---------------------------------------------------------
         # RF002.01.07 - Encerrar sistema de votação
+        # ---------------------------------------------------------
+        
         elif opcaoVotacaoIniciado == 2:
             mesario_valido = False
 
@@ -140,6 +144,7 @@ def boletim_urna():
     e ao final declara o vencedor da eleição.
     """
     # Imprime cabeçalho formatado do boletim de urna
+    print("----------------------------------\n")
     print("BOLETIM DE URNA - RESULTADO DA VOTAÇÃO")
     
     # Chama função do módulo consultas para obter todos os candidatos com seus votos
@@ -210,6 +215,7 @@ def declaracao_vencedor():
     Exibe a declaração do vencedor da votação.
     Nota: Esta informação também é exibida ao final do Boletim de Urna.
     """
+    print("----------------------------------\n")
      # Imprime cabeçalho formatado da declaração de vencedor
     print("Declaração do Vencedor")
     
@@ -229,6 +235,7 @@ def declaracao_vencedor():
     print("Numero: " , vencedor[0])
     print("Partido: " , vencedor[2])
     print("Votos: " , vencedor[3]) 
+    print("----------------------------------\n")
     
     # Registra esta operação nos logs do sistema para auditoria
     util.salvar_log("RESULTADO - Declaração de Vencedor consultada")
@@ -237,6 +244,7 @@ def estatistica_comparecimento():
     """
     Exibe estatísticas de comparecimento dos eleitores.
     """
+    print("----------------------------------\n")
     # Imprime cabeçalho formatado da estatística de comparecimento
     print("\n" + "="*70)
     print("ESTATÍSTICA DE COMPARECIMENTO")
@@ -271,7 +279,8 @@ def estatistica_comparecimento():
     print("\n" + "="*70 + "\n")
     
     # Registra esta operação nos logs do sistema para auditoria
-    util.salvar_log("RESULTADO - Estatística de Comparecimento consultada")
+    util.salvar_log("RESULTADO!! - Estatística de Comparecimento consultada")
+    print("----------------------------------\n")
 
 def votos_por_partido():
     """
@@ -305,7 +314,7 @@ def votos_por_partido():
         print("Votos: ", p[1]) 
    
     # Registra esta operação nos logs do sistema para auditoria
-    util.salvar_log("RESULTADO - Votos por Partido consultados")
+    util.salvar_log("RESULTADO!! - Votos por Partido consultados")
 
 def validacao_integridade(): 
     """
@@ -366,7 +375,7 @@ def validacao_integridade():
     print("\n" + "="*70 + "\n")
     
     # Registra esta operação nos logs do sistema para auditoria
-    util.salvar_log("RESULTADO - Validação de Integridade consultada")
+    util.salvar_log("RESULTADO!! - Validação de Integridade consultada")
                 
 opcao = 0 
 while opcao != 3: 
@@ -1040,6 +1049,7 @@ while opcao != 3:
     # MODULO DE VOTACAO (RF002)
     # Processamento do processo eleitoral
     # =================================================================
+    
     elif opcao == 2:
         print("Opcao de votacao selecionado\n")
         util.salvar_log("Opcao de votacao selecionado")
@@ -1069,6 +1079,7 @@ while opcao != 3:
                 # ---------------------------------------------------------
                 # ABRIR SISTEMA DE VOTACAO (RF002.01) 
                 # ---------------------------------------------------------
+                
                 if opcaoVotacao == 1:
                     mesario_valido = False
 
@@ -1134,6 +1145,7 @@ while opcao != 3:
                 # ---------------------------------------------------------
                 # AUDITORIA DA VOTACAO (RF002.02)
                 # ---------------------------------------------------------
+                
                 elif opcaoVotacao == 3:
                     print("Entrou em Votacao -> Auditoria\n")
 
@@ -1157,8 +1169,11 @@ while opcao != 3:
                             print("EXIBIÇÃO DE LOGS DE OCORRÊNCIAS")
                             util.exibir_logs()
                             util.salvar_log("AUDITORIA - Exibição de Logs de Ocorrências")
-                        
+                
+                # -------------------------------------------------------------------------------- 
                      # RF002.02.02 - Exibição dos Protocolos de Votação de votacao
+                # --------------------------------------------------------------------------------
+
                         elif opcaoVotacaoAuditoria == 2:
                             print("=== EXIBIÇÃO DOS PROTOCOLOS DE VOTAÇÃO ===\n")
                             util.salvar_log("AUDITORIA - Exibição dos Protocolos de Votação")
