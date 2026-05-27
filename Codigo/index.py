@@ -14,6 +14,11 @@ import seguranca as seguranca # Modulo de criptografia conforme pedido no projet
 def menu_votacao_iniciada():
     opcaoVotacaoIniciado = -1
     while opcaoVotacaoIniciado != 0:
+
+        #--------------------------------------------------------------------
+        # RF002.03.01 - Menu Principal
+        #--------------------------------------------------------------------
+        
         print("-----------VOTACAO INICIADO-----------")
         print("1 - Votar")
         print("2 - Fechar sistema de votação")
@@ -25,8 +30,11 @@ def menu_votacao_iniciada():
             print("Digite um numero valido!")
             opcaoVotacaoIniciado = -1
         print("----------------------------------\n")
-
+        
+        #--------------------------------------------------------
         # RF002.01.06 - Votação
+        #--------------------------------------------------------
+        
         if opcaoVotacaoIniciado == 1:
             
             eleitor_valido = False
@@ -94,7 +102,10 @@ def menu_votacao_iniciada():
         
         elif opcaoVotacaoIniciado == 2:
             mesario_valido = False
-
+ # ---------------------------------------------------------
+ # RF002.01.01, RF002.01.02, RF002.01.03, RF002.01.04, 
+ # RF002.01.05 e RF002.01.06 - Abertura do Sistema e Zerézima
+ # ---------------------------------------------------------
             while not mesario_valido:
                 titulo = input("Digite o título de Eleitor: ")
                 cpf_4  = input("Digite os 4 primeiros dígitos do CPF: ")
@@ -106,6 +117,10 @@ def menu_votacao_iniciada():
                     continue
 
                 mesario_valido = True
+                
+        #-----------------------------------------------------------------
+        # RF002.02.02 - Exibição dos Protocolos de Votação
+        #------------------------------------------------------------------
 
             # Perguntar se deseja encerrar a votação
             is_enc_votacao = input("Você tem certeza que quer encerrar essa votação? (S/N): ").strip().upper()
@@ -139,6 +154,9 @@ def menu_votacao_iniciada():
                     print("Erro ao encerrar votação.")
 
 def boletim_urna():
+    #--------------------------------------------------------------------------------
+    # RF002.02, RF002.03, RF003.01 - Menus de Resultados e Auditoria
+    #--------------------------------------------------------------------------------
     """
     Exibe o Boletim de Urna com contagem de votos por candidato em ordem alfabética
     e ao final declara o vencedor da eleição.
@@ -209,6 +227,10 @@ def boletim_urna():
     
     # Registra esta operação nos logs do sistema para auditoria
     util.salvar_log("RESULTADO - Boletim de Urna consultado")
+
+    #-------------------------------------------------------------------
+    # RF002.02.01.08 e RF002.02.02 - Exibição de Dados na Auditoria
+    #-------------------------------------------------------------------
 
 def declaracao_vencedor():
     """
@@ -402,6 +424,11 @@ while opcao != 3:
         print("Opcao de gerenciamento selecionado\n")
 
         opcaoGerenciamento = -1
+
+        #--------------------------------------------------------------------------------------------
+        # RF001.09, RF001.10, RF001.11, RF001.12, RF001.13 e RF001.14 - Gerenciamento de Candidatos
+        #--------------------------------------------------------------------------------------------
+        
         while opcaoGerenciamento != 0:
             print("-----------GERENCIAMENTO-----------")
             print("1 - Cadastrar Eleitor")
