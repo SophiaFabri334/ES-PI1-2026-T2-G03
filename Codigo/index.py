@@ -8,9 +8,10 @@ import util as util           # Modulo de funcoes utilitarias (validacao, logs, 
 import seguranca as seguranca # Modulo de criptografia conforme pedido no projeto
 import os                     # Limpa a tela do terminal
 
-os.system('cls' if os.name == 'nt' else 'clear')
-
 # =============================================================================
+os.system('cls' if os.name == 'nt' else 'clear')
+# =============================================================================
+
 # MENU PRINCIPAL
 # Loop principal do sistema - executa ate o usuario escolher sair (opcao 3)
 # =============================================================================
