@@ -1,7 +1,9 @@
 import numpy as np
 import re
 #expressões regulares em inglês 
-
+#----------------------------------------------------------------------------------------------
+#                                     (RNF 005) 
+#----------------------------------------------------------------------------------------------
 # Matriz 2x2 fixa para garantir que o sistema sempre gere a MESMA chave para o MESMO título
 CHAVE_MESTRA = np.array([[3, 3], [2, 5]])
 
