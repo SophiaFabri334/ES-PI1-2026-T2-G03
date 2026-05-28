@@ -178,7 +178,7 @@ def inserir_voto(id_candidato, numero_candidato, titulo, cpf, chave):
         valores = (id_candidato, datetime.now(), protocolo)
         cursor.execute(sql, valores)
         conexao.commit()
-        print("Voto cadastrado com sucesso:", cursor.lastrowid)
+
         atualiza_eleitor(titulo, cpf, chave)
         return protocolo
     except Exception as e:

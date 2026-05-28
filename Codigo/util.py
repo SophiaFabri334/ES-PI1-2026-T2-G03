@@ -309,3 +309,4 @@ def exibir_protocolos_auditoria(protocolos):
     print("\n" + "="*60)
     print("Protocolos em ordem alfabética para verificação")
     print("="*60 + "\n")
+
