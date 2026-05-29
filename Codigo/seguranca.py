@@ -36,8 +36,10 @@ def descriptografar(texto_criptografado):
     """
     Lógica inversa da Cifra de Hill
     """
+  
     det = int(np.round(np.linalg.det(CHAVE_MESTRA))) % 26
-    
+    if len(texto_criptografado) % 2 != 0:
+        texto_criptografado += "A"
     # Inverso multiplicativo do determinante módulo 26
     det_inv = pow(det, -1, 26)
     
@@ -62,4 +64,15 @@ def descriptografar(texto_criptografado):
         # Junta os números recuperados (convertendo os inteiros de volta para string)
         resultado += "".join(str(int(num)) for num in descriptografado)
         
+    # remove o 0 que adiciona no final da descriptografia
+    if resultado.endswith("0"):
+        resultado = resultado[:-1]
     return resultado
+
+
+cpf = "56620106846"
+cpf_criptografado = criptografar(cpf)
+
+print(f"cpf criptografado {cpf_criptografado}") 
+print(f"cpf descriptografado {descriptografar(cpf_criptografado)}") 
+print(f"cpf original {cpf}") 
