@@ -28,6 +28,7 @@ def menu_votacao_iniciada():
             opcaoVotacaoIniciado = int(input("Selecione uma opcao: "))
         except:
             print("Digite um numero valido!")
+            input("Digite ENTER para tentar novamente")
             opcaoVotacaoIniciado = -1
         print("----------------------------------\n")
         
@@ -160,6 +161,10 @@ def menu_votacao_iniciada():
                     return
                 else:
                     print("Erro ao encerrar votação.")
+        else:
+            print("=== OPÇÃO INVÁLIDA ===\n")
+            input("Digite ENTER para tentar novamente")
+            util.limpar_tela()
 
 def boletim_urna():
     #--------------------------------------------------------------------------------
@@ -430,6 +435,7 @@ while opcao != 3:
         opcao = int(input("Selecione uma opcao: "))
     except:
         print("Digite um numero valido!")
+        input("Digite ENTER para tentar novamente")
         opcao = 0
     print("----------------------------------\n")
 
@@ -460,6 +466,7 @@ while opcao != 3:
                 opcaoGerenciamento = int(input("Selecione uma opcao: "))
             except:
                 print("Digite um numero valido!")
+                input("Digite ENTER para tentar novamente")
                 opcaoGerenciamento = -1
             print("----------------------------------\n")
 
@@ -671,8 +678,8 @@ while opcao != 3:
                         try:
                             opcao_edicao = int(input("Opção: "))
                         except:
-                            print("\nOpção inválida!\n")
-                            input("Pressione ENTER para continuar...")
+                            print("=== OPÇÃO INVÁLIDA ===\n")
+                            input("Digite ENTER para tentar novamente")
                             continue
 
                         # CANCELAR EDIÇÃO
@@ -1037,7 +1044,8 @@ while opcao != 3:
                                 try:
                                     opcao_edicao = int(input("\n Selecione a opção desejada: "))
                                 except:
-                                    print("\nOpção inválida!\n")
+                                    print("=== OPÇÃO INVÁLIDA ===\n")
+                                    input("Digite ENTER para tentar novamente")
 
                                 util.limpar_tela()
                                 if opcao_edicao == 4:
@@ -1115,7 +1123,8 @@ while opcao != 3:
                                     try:
                                         opcao_edicao = int(input("\n Selecione a opção desejada: "))
                                     except:
-                                        print("\nOpção inválida!\n")
+                                        print("=== OPÇÃO INVÁLIDA ===\n")
+                                        input("Digite ENTER para tentar novamente")
                                         continue
 
                                
@@ -1273,7 +1282,8 @@ while opcao != 3:
                         print("Voltando ao menu de gerenciamento...\n")
                     
                     else:
-                        print("Opção inválida!\n")
+                        print("=== OPÇÃO INVÁLIDA ===\n")
+                        input("Digite ENTER para tentar novamente")
                         util.salvar_log("GERENCIAMENTO CANDIDATOS - ERRO: Opção inválida")
             
             # Voltar ao menu principal
@@ -1282,8 +1292,9 @@ while opcao != 3:
             
             # Opcao invalida
             else:
-                print("Gerenciamento -> Opcao invalida\n")
                 util.salvar_log("Gerenciamento -> ERRO: Opcao invalida do menu")
+                print("=== OPÇÃO INVÁLIDA ===\n")
+                input("Digite ENTER para tentar novamente")
     
     # =================================================================
     # MODULO DE VOTACAO (RF002)
@@ -1384,7 +1395,9 @@ while opcao != 3:
 
                         else: 
                             util.salvar_log("VOTACAO - Resultado - ERRO: Selecionado opção inválida do menu")
-                            print("Opção inválida")
+                            print("\n=== OPÇÃO INVÁLIDA ===\n")
+                            input("Digite ENTER para tentar novamente")
+                            util.limpar_tela()
 
                 
                 # ---------------------------------------------------------
@@ -1444,7 +1457,8 @@ while opcao != 3:
                             print("Voltando...\n")
                         
                         else:
-                            print("Votacao -> Auditoria -> Opcao invalida\n")
+                            print("=== OPÇÃO INVÁLIDA ===\n")
+                            input("Digite ENTER para tentar novamente")
                             util.salvar_log("Votacao -> Auditoria -> ERRO: Opcao invalida do menuß")
 
                 elif opcaoVotacao == 0:
@@ -1452,7 +1466,8 @@ while opcao != 3:
                     util.salvar_log("VOTACAO - Sair")
                 
                 else:
-                    print("Votacao -> Opcao invalida\n")
+                    print("=== OPÇÃO INVÁLIDA ===\n")
+                    input("Digite ENTER para tentar novamente")
                     util.salvar_log("Votacao -> Opcao invalida")
     
     # =================================================================
@@ -1464,5 +1479,6 @@ while opcao != 3:
         print("=== PROGRAMA FINALIZADO ===\n")
     # Opcao invalida no menu principal
     else:
-        print("Opcao invalida\n")
+        print("=== OPÇÃO INVÁLIDA ===\n")
+        input("Digite ENTER para tentar novamente")
 

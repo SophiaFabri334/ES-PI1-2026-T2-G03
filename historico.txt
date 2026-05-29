@@ -1,2 +1,15 @@
 [2026-05-28 19:50:12] Gerenciamento -> ERRO: Opcao invalida do menu
 [2026-05-28 19:50:25] GERENCIAMENTO CANDIDATOS - ERRO: Opção inválida
+[2026-05-29 08:15:44] Gerenciamento -> ERRO: Opcao invalida do menu
+[2026-05-29 08:18:31] Gerenciamento -> ERRO: Opcao invalida do menu
+[2026-05-29 08:18:39] Votacao -> Opcao invalida
+[2026-05-29 08:19:05] Votacao -> Opcao invalida
+[2026-05-29 08:19:13] Gerenciamento -> ERRO: Opcao invalida do menu
+[2026-05-29 08:19:18] GERENCIAMENTO CANDIDATOS - ERRO: Opção inválida
+[2026-05-29 08:21:22] GERENCIAMENTO CANDIDATOS - ERRO: Opção inválida
+[2026-05-29 08:21:22] GERENCIAMENTO CANDIDATOS - ERRO: Opção inválida
+[2026-05-29 08:21:29] GERENCIAMENTO CANDIDATOS - ERRO: Opção inválida
+[2026-05-29 08:21:35] Gerenciamento -> ERRO: Opcao invalida do menu
+[2026-05-29 08:21:49] VOTACAO - Resultado - ERRO: Selecionado opção inválida do menu
+[2026-05-29 08:22:27] VOTACAO - Resultado - ERRO: Selecionado opção inválida do menu
+[2026-05-29 08:22:55] Votacao -> Opcao invalida
