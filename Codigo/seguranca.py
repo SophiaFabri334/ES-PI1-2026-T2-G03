@@ -68,11 +68,3 @@ def descriptografar(texto_criptografado):
     if resultado.endswith("0"):
         resultado = resultado[:-1]
     return resultado
-
-
-cpf = "56620106846"
-cpf_criptografado = criptografar(cpf)
-
-print(f"cpf criptografado {cpf_criptografado}") 
-print(f"cpf descriptografado {descriptografar(cpf_criptografado)}") 
-print(f"cpf original {cpf}") 
