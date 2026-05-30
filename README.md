@@ -21,7 +21,7 @@ O sistema conta com uma interface baseada em menus e submenus intuitivos, guiado
 
 # 🔐 Segurança, Validação e Auditoria
 
-A segurança é a espinha dorsal da aplicação. O fluxo é protegido por uma chave de acesso restrita, permitindo um controle rigoroso sobre a abertura e o encerramento da votação. Para garantir o preceito de "um eleitor, um voto", o sistema possui um mecanismo estrito de controle de voto único, validando a identidade do cidadão por meio da validação do título de eleitor. Além disso, toda a base de dados conta com criptografia para proteger informações sensíveis e uma camada de validação de integridade, assegurando que os dados não foram corrompidos ou alterados. Para fins de transparência, o sistema dispõe de um módulo de auditoria, permitindo verificar a conformidade de todo o processo.
+A segurança é o principal da aplicação. O fluxo é protegido por uma chave de acesso restrita, permitindo um controle rigoroso sobre a abertura e o encerramento da votação. Para garantir o preceito de "um eleitor, um voto", o sistema possui um mecanismo estrito de controle de voto único, validando a identidade do cidadão por meio da validação do título de eleitor. Além disso, toda a base de dados conta com criptografia para proteger informações sensíveis e uma camada de validação de integridade, assegurando que os dados não foram corrompidos ou alterados. Para fins de transparência, o sistema dispõe de um módulo de auditoria, permitindo verificar a conformidade de todo o processo.
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
