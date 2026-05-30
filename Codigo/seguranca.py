@@ -13,7 +13,13 @@ CHAVE_MESTRA = np.array([[3, 3], [2, 5]])
 #     # Valida e ve se o cpf existe e tem o num certo (ex: se tiver 9, vai dar erro)
 
 def criptografar(texto):
-    """Lógica da Cifra de Hill: Título -> Letras Criptografadas"""
+    """Lógica da Cifra de Hill: Título -> Letras Criptografadas
+        Args:
+        texto (str): texto a ser encriptografado
+    
+        Returns:
+            texto já criptografado
+    """
     texto_limpo = re.sub(r'\D', '', str(texto))
     
     if len(texto_limpo) % 2 != 0:
@@ -35,6 +41,11 @@ def criptografar(texto):
 def descriptografar(texto_criptografado):
     """
     Lógica inversa da Cifra de Hill
+    Args:
+        texto (str): Texto já criptografado
+    
+    Returns:
+        Texto descriptografado
     """
   
     det = int(np.round(np.linalg.det(CHAVE_MESTRA))) % 26

@@ -12,6 +12,14 @@ import seguranca as seguranca # Modulo de criptografia conforme pedido no projet
 # Loop principal do sistema - executa ate o usuario escolher sair (opcao 3)
 # =============================================================================
 def menu_votacao_iniciada():
+    """"
+        Funcao de de menu de votacao iniciada -> feita para melhor organização do código
+        Args:
+            None
+        
+        Returns:
+            None
+    """
     opcaoVotacaoIniciado = -1
     while opcaoVotacaoIniciado != 0:
 
@@ -171,8 +179,15 @@ def boletim_urna():
     # RF002.02, RF002.03, RF003.01 - Menus de Resultados e Auditoria
     #--------------------------------------------------------------------------------
     """
-    Exibe o Boletim de Urna com contagem de votos por candidato em ordem alfabética
-    e ao final declara o vencedor da eleição.
+        Exibe o Boletim de Urna com contagem de votos por candidato em ordem alfabética
+        e ao final declara o vencedor da eleição.
+
+        Args:
+            None
+        
+        Returns:
+            None
+    
     """
     # Imprime cabeçalho formatado do boletim de urna
     util.limpar_tela()
@@ -281,7 +296,12 @@ def declaracao_vencedor():
 
 def estatistica_comparecimento(): 
     """
-    Exibe estatísticas de comparecimento dos eleitores.
+        Exibe estatísticas de comparecimento dos eleitores.
+        Args:
+            None
+        
+        Returns:
+            None
     """
     # Imprime cabeçalho formatado da estatística de comparecimento
     util.limpar_tela()
@@ -322,8 +342,13 @@ def estatistica_comparecimento():
 
 def votos_por_partido():
     """
-    Exibe contagem de votos agrupados por partido.
-    Mostra a somatória de votos recebidos por cada legenda partidária.
+        Exibe contagem de votos agrupados por partido.
+        Mostra a somatória de votos recebidos por cada legenda partidária.
+        Args:
+            None
+        
+        Returns:
+            None
     """
     # Imprime cabeçalho formatado da análise de votos por partido
     util.limpar_tela()
@@ -358,9 +383,14 @@ def votos_por_partido():
 
 def validacao_integridade(): 
     """
-    Exibe validação de integridade dos votos registrados.
-    Compara o total de votos na urna com a quantidade de eleitores
-    que possuem o status "Já Votou".
+        Exibe validação de integridade dos votos registrados.
+        Compara o total de votos na urna com a quantidade de eleitores
+        que possuem o status "Já Votou".
+        Args:
+            None
+        
+        Returns:
+            None
     """
     # Imprime cabeçalho formatado da validação de integridade
     util.limpar_tela()
